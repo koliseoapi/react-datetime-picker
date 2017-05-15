@@ -1,0 +1,45 @@
+@import 'variables';
+
+.dt-time {
+  color: $white;
+
+  .dt-showtime {
+    text-align: center;
+    padding-top: 50px;
+  }
+
+  .dt-separater {
+    display: inline-block;
+    font-size: 32px;
+    font-weight: bold;
+    color: $blue;
+    width: 32px;
+    height: 65px;
+    line-height: 65px;
+    text-align: center;
+  }
+
+  .dt-time-text {
+    position: relative;
+    left: -10px;
+    font-size: 15px;
+    color: $blue;
+    margin-top: 7px;
+    margin-bottom: 10px;
+  }
+
+  .dt-sliders {
+    padding: 0 10px;
+  }
+
+  .dt-time {
+    width: 65px;
+    height: 65px;
+    display: inline-block;
+    font-size: 38px;
+    line-height: 65px;
+    background-color: $blue;
+    border-radius: 3px;
+    text-align: center;
+  }
+}

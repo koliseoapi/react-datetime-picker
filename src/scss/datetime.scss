@@ -1,0 +1,111 @@
+@import 'variables';
+@import 'calendar';
+@import 'time';
+@import 'slider';
+
+.dt-btn {
+  display: inline-block;
+  background-color: #ffffff;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  line-height: 1;
+
+  &:before {
+    margin-right: 6px;
+  }
+}
+
+.dt-hidden {
+  display: none !important;
+}
+
+.dt-input-container {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.dt-icon {
+  width: 20px;
+  height: 20px;
+  fill: $white;
+  margin-right: 5px;
+}
+
+.dt-input-moment {
+  width: 330px;
+  padding: 12px 15px;
+  border-radius: 3px;
+  border: 1px solid $gray;
+  display: inline-block;  
+  position: absolute;
+  left: 0;
+  top: 40px;
+
+  .dt-options {
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+
+    button {
+      float: left;
+      width: 50%;
+      color: $blue;
+      text-align: center;
+      font-size: 16px;
+      padding: 7px;
+      border: 1px solid $blue;
+      border-radius: 3px;
+      vertical-align: middle;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      &:not(.is-active) {
+        .dt-icon {
+          fill: $blue;
+        }
+      }
+      &.is-active {
+        color: $white;
+        background-color: $blue;
+      }
+    }
+
+  }
+
+  .dt-tab {
+    display: none;
+    height: 310px;
+
+    &.is-active {
+      display: block;
+    }
+  }
+
+  .dt-tabs {
+    margin-bottom: 11px;
+  }
+
+  .dt-close {
+    display: block;
+    margin-top: 10px;
+    width: 100%;
+    background-color: $blue;
+    padding: 12px 0;
+    text-align: center;
+    color: $white;
+    font-size: 16px;
+    border-radius: 3px;
+  }
+}
