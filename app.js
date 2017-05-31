@@ -27336,14 +27336,18 @@ var DateTimeInput = function (_React$Component) {
             })
           ),
           _react2.default.createElement(
-            'button',
-            { type: 'button', className: 'dt-btn dt-clear', onClick: this.handleClear },
-            i18n.Clear
-          ),
-          _react2.default.createElement(
-            'button',
-            { type: 'button', className: 'dt-btn dt-close', onClick: this.handleClose },
-            i18n.Close
+            'div',
+            { className: 'dt-actions' },
+            _react2.default.createElement(
+              'a',
+              { className: 'dt-clear', onClick: this.handleClear },
+              i18n.Clear
+            ),
+            _react2.default.createElement(
+              'button',
+              { type: 'button', className: 'dt-btn dt-close', onClick: this.handleClose },
+              i18n.Close
+            )
           )
         )
       );
