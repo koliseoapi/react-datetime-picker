@@ -2,6 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DateTimeInput from '../index';
+import { bindAll } from 'lodash';
 
 var i18n = {
   en: {
@@ -21,17 +22,19 @@ var i18n = {
 }
 
 
-var App = React.createClass({
-  displayName: 'App',
+const defaultLocale = 'en';
 
-  getInitialState() {
-    var locale = 'en';
-    return {
-      locale,
-      i18n: i18n[locale],
-      moment: moment().locale(locale)
-    };
-  },
+class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    bindAll(this, [ 'handleChange', 'handleClose', 'onLocaleChange' ])
+    this.state = {
+      locale: defaultLocale,
+      i18n: i18n[defaultLocale],
+      moment: moment().locale(defaultLocale)
+    }
+  }
 
   render() {
     var moment = this.state.moment;
@@ -58,20 +61,20 @@ var App = React.createClass({
         </form>
       </div>
     );
-  },
+  }
 
   onLocaleChange(e) {
     var locale = e.target.value;
     this.setState({ locale, i18n: i18n[locale], moment: this.state.moment.locale(locale) });
-  },
+  }
 
   handleChange(moment) {
     this.setState({ moment });
-  },
+  }
 
   handleClose() {
     console.log('closed', this.state.moment.format('llll'));
   }
-});
+};
 
 ReactDOM.render(<App/>, document.getElementById('app'));

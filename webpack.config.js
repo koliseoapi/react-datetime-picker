@@ -10,7 +10,6 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 module.exports = {
   entry: {
     app: './test/app.js',
-
   },
   devtool: 'source-map',
   output: {
@@ -19,11 +18,24 @@ module.exports = {
     filename: 'app.js' 
   },
   module: {
-    loaders: [{
-      test: /\.js$/,
-      exclude: [ /node_modules/ ],
-      loaders: [ 'react-hot-loader', 'babel-loader?presets[]=react&presets[]=es2015' ]
-    }]
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              'react', 
+              // needed for tree shaking
+              // see https://medium.com/modus-create-front-end-development/webpack-2-tree-shaking-configuration-9f1de90f3233
+              ["es2015", { "modules": false }]
+            ],
+            plugins: ['lodash']
+          }
+        }]
+      }
+    ]
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
