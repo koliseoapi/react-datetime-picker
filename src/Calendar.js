@@ -22,7 +22,6 @@ var Day = function(props) {
     'dt-invalid': !isValid,
     'dt-current-day': selected
   });
-
   return <td {...elementProps}>{day}</td>;
 }
 
@@ -34,6 +33,14 @@ class Calendar extends React.Component {
       moment: props.moment.clone()
     }
     bindAll(this, [ 'selectDate', 'nextMonth', 'prevMonth' ]);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.moment.isSame(nextProps.moment)) {
+      this.state.moment.locale(nextProps.moment.locale());
+    } else {
+      this.state.moment = nextProps.moment.clone();
+    }
   }
 
   render() { 
@@ -77,8 +84,9 @@ class Calendar extends React.Component {
                 <tr key={weekIndex}>
                   {
                     row.map((day) => {
-                      const isValid = this.isValid(day, weekIndex);
-                      const selected = this.getNewDate(day, weeks).isSame(this.props.moment);
+                      const newDate = this.getNewDate(day, weekIndex);
+                      const isValid = this.props.isValid(newDate);
+                      const selected = newDate.isSame(this.props.moment);
                       return (
                         <Day key={day} day={day} selected={selected} weekIndex={weekIndex} isValid={isValid}
                           onClick={isValid && this.selectDate.bind(null, day, weekIndex)}
@@ -105,25 +113,26 @@ class Calendar extends React.Component {
     return newDate;
   }
 
-  isValid(day, weekIndex) {
-    let newDate = this.getNewDate(day, weekIndex);
-    return this.props.isValid(newDate);
-  }
-
   selectDate(day, weekIndex) {
     let newDate = this.getNewDate(day, weekIndex);
-    this.props.onChange(newDate);
+    if (isPrevMonth(day, weekIndex)) {
+      this.prevMonth();
+    } else if (isNextMonth(day, weekIndex)) {
+      this.nextMonth();
+    } else {
+      this.props.onChange(newDate);
+    }
   }
 
   prevMonth(e) {
-    e.preventDefault();
+    e && e.preventDefault();
     this.setState({
       moment: this.state.moment.subtract(1, 'month')
     });
   }
 
   nextMonth(e) {
-    e.preventDefault();
+    e && e.preventDefault();
     this.setState({
       moment: this.state.moment.add(1, 'month')
     });

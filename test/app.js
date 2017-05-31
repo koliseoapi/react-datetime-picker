@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DateTimeInput from '../index';
@@ -10,17 +9,18 @@ var i18n = {
     Time: 'Time',
     Close: 'Close',
     Hours: 'Hours',
-    Minutes: 'Minutes'
+    Minutes: 'Minutes',
+    Clear: 'Clear'
   },
   es: {
     Date: 'Fecha',
     Time: 'Hora',
     Close: 'Cerrar',
     Hours: 'Horas',
-    Minutes: 'Minutos'
+    Minutes: 'Minutos',
+    Clear: 'Borrar'
   }
 }
-
 
 const defaultLocale = 'en';
 
@@ -32,12 +32,11 @@ class App extends React.Component {
     this.state = {
       locale: defaultLocale,
       i18n: i18n[defaultLocale],
-      moment: moment().locale(defaultLocale)
+      value: undefined
     }
   }
 
   render() {
-    var moment = this.state.moment;
     return (
       <div className="app">
         <h1>react-moment-datetime</h1>
@@ -50,7 +49,8 @@ class App extends React.Component {
           </select>
           <label htmlFor="date" className="dt-input-label">Date</label>
           <DateTimeInput
-            moment={moment}
+            value={this.state.value}
+            locale={this.state.locale}
             i18n={this.state.i18n}
             onChange={this.handleChange}
             onClose={this.handleClose}
@@ -65,15 +65,15 @@ class App extends React.Component {
 
   onLocaleChange(e) {
     var locale = e.target.value;
-    this.setState({ locale, i18n: i18n[locale], moment: this.state.moment.locale(locale) });
+    this.setState({ locale, i18n: i18n[locale], value: this.state.value });
   }
 
   handleChange(moment) {
-    this.setState({ moment });
+    this.setState({ value: !moment? undefined : moment.format('YYYY-MM-DD HH:mm') });
   }
 
   handleClose() {
-    console.log('closed', this.state.moment.format('llll'));
+    console.log('closed', this.state.value);
   }
 };
 
