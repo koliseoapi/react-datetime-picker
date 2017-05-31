@@ -73,13 +73,15 @@ class DateTimeInput extends React.Component {
                 isValid={isValid}
               />
             </div>
-
-            <button type="button" className="dt-btn dt-clear" onClick={this.handleClear}>
-              {i18n.Clear}
-            </button>
-            <button type="button" className="dt-btn dt-close" onClick={this.handleClose}>
-              {i18n.Close}
-            </button>
+            
+            <div className="dt-actions">
+              <a className="dt-clear" onClick={this.handleClear}>
+                {i18n.Clear}
+              </a>
+              <button type="button" className="dt-btn dt-close" onClick={this.handleClose}>
+                {i18n.Close}
+              </button>
+            </div>
           </dialog>
         }
       </div>

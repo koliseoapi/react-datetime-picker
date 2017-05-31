@@ -17,6 +17,10 @@
   }
 }
 
+.dt-actions {
+  text-align: right;
+}
+
 .dt-hidden {
   display: none !important;
 }
@@ -109,12 +113,10 @@
   }
 
   .dt-clear {
-    color: $black;
+    color: $gray-dark;
     text-decoration: underline;
-    text-align: right;
     padding-right: 20px;
-    display: inline-block;
-    width: 50%;
+    font-size: 16px;
     cursor: pointer;
   }
 }
