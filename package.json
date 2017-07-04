@@ -5,12 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "npm-run-all --parallel dev watch:css",
-    "build:css": "node-sass --output-style compressed -o test/css src/scss/datetime.scss",
+    "build:css": "node-sass --output-style compressed -o example/css src/scss/datetime.scss",
     "watch:css": "onchange 'src/scss/*.scss' -- npm run build:css",
-    "dev": "webpack-dev-server --inline --hot --progress --colors"
-  },
-  "github-pages-deploy": {
-    "src": "test"
+    "dev": "webpack-dev-server --inline --hot --progress --colors",
+    "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register --require .vscode/registerBabel.js test/*Test.js"
   },
   "author": "Carlos Coloma <ccescribano@gmail.com>",
   "license": "MIT",
@@ -20,8 +18,8 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "babel-register": "^6.18.0",
-    "github-pages-deploy": "0.0.3",
     "json-loader": "^0.5.4",
+    "mocha": "^3.4.2",
     "node-sass": "^4.5.2",
     "npm-run-all": "^4.0.2",
     "onchange": "^3.2.1",
@@ -43,7 +41,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ccoloma/react-moment-datetime.git"
+    "url": "git+https://github.com/koliseoapi/react-moment-datetime.git"
   },
   "keywords": [
     "react",
@@ -54,7 +52,7 @@
     "moment"
   ],
   "bugs": {
-    "url": "https://github.com/ccoloma/react-moment-datetime/issues"
+    "url": "https://github.com/koliseoapi/react-moment-datetime/issues"
   },
-  "homepage": "https://github.com/ccoloma/react-moment-datetime#readme"
+  "homepage": "https://github.com/koliseoapi/react-moment-datetime#readme"
 }

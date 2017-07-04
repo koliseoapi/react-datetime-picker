@@ -12,7 +12,7 @@ npm i react-moment-datetime --save
 **Notice:** This module requires [moment](https://www.npmjs.com/package/moment).
 
 ### Demo
-http://ccoloma.github.io/react-moment-datetime
+http://koliseoapi.github.io/react-moment-datetime
 
 ### Usage
 ``` javascript
@@ -23,12 +23,12 @@ http://ccoloma.github.io/react-moment-datetime
   isValid={() => true} // default
 />
 ```
-Check [app.js](https://github.com/ccoloma/react-moment-datetime/blob/master/test/app.js) for a working example.
+Check [app.js](https://github.com/koliseoapi/react-moment-datetime/blob/master/example/app.js) for a working example.
 
 ### Development
 - npm install
 - npm start
-- http://localhost:8080/test/
+- http://localhost:8080/example/
 
 ### License
 
