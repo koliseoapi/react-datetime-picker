@@ -9,16 +9,14 @@ var i18n = {
     Time: 'Time',
     Close: 'Close',
     Hours: 'Hours',
-    Minutes: 'Minutes',
-    Clear: 'Clear'
+    Minutes: 'Minutes'
   },
   es: {
     Date: 'Fecha',
     Time: 'Hora',
     Close: 'Cerrar',
     Hours: 'Horas',
-    Minutes: 'Minutos',
-    Clear: 'Borrar'
+    Minutes: 'Minutos'
   }
 }
 

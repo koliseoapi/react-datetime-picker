@@ -13,7 +13,7 @@ class DateTimeInput extends React.Component {
       tab: 0,
       isOpen: !!props.isOpen
     };
-    bindAll(this, ['handleClose', 'handleClickTab', 'toggleDialog', 'handleClear']);
+    bindAll(this, ['handleClose', 'handleClickTab', 'toggleDialog']);
   }
 
   render() {
@@ -74,9 +74,6 @@ class DateTimeInput extends React.Component {
             </div>
             
             <div className="dt-actions">
-              <a className="dt-clear" onClick={this.handleClear}>
-                {i18n.Clear}
-              </a>
               <button type="button" className="dt-btn dt-close" onClick={this.handleClose}>
                 {i18n.Close}
               </button>
@@ -106,14 +103,6 @@ class DateTimeInput extends React.Component {
     }
   }
 
-  handleClear(e) {
-    e.preventDefault();
-    this.setState({
-      isOpen: false
-    });
-    this.props.onChange();
-  }
-
 };
 
 DateTimeInput.defaultProps = {
@@ -122,8 +111,7 @@ DateTimeInput.defaultProps = {
     Time: 'Time',
     Close: 'Close',
     Hours: 'Hours',
-    Minutes: 'Minutes',
-    Clear: 'Clear'
+    Minutes: 'Minutes'
   },
   format: 'YYYY-MM-DD HH:mm',
   name: 'Date',
