@@ -1,7 +1,6 @@
-import cx from 'classnames';
 import React from 'react';
 import InputSlider from 'react-input-slider';
-import { bindAll } from 'lodash';
+import { bindAll } from './util';
 
 class Time extends React.Component {
 
@@ -13,7 +12,7 @@ class Time extends React.Component {
   render() {
     var { moment, i18n, className } = this.props;
     return (
-      <div className={cx('dt-time', className)}>
+      <div className={'dt-time ' + (className || '')}>
         <div className="dt-showtime">
           <span className="dt-time">{moment.format('HH')}</span>
           <span className="dt-separater">:</span>

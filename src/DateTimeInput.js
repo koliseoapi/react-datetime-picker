@@ -1,10 +1,9 @@
 import cx from 'classnames';
-import blacklist from 'blacklist';
 import React from 'react';
 import Calendar from './Calendar';
 import Time from './Time';
 import moment from 'moment';
-import { bindAll } from 'lodash';
+import { bindAll } from './util';
 
 class DateTimeInput extends React.Component {
 
@@ -14,7 +13,7 @@ class DateTimeInput extends React.Component {
       tab: 0,
       isOpen: !!props.isOpen
     };
-    bindAll(this, [ 'handleClose', 'handleClickTab', 'toggleDialog', 'handleClear' ]);
+    bindAll(this, ['handleClose', 'handleClickTab', 'toggleDialog', 'handleClear']);
   }
 
   render() {
@@ -34,9 +33,9 @@ class DateTimeInput extends React.Component {
           required={required}
         />
         { isOpen && 
-          <dialog className={cx('dt-input-moment')}> 
+          <dialog className="dt-input-moment"> 
             <div className="dt-options">
-              <button type="button" className={cx('dt-calendar dt-btn', {'is-active': tab === 0})} onClick={this.handleClickTab.bind(null, 0)}>
+              <button type="button" className={'dt-calendar dt-btn ' + (tab === 0? 'is-active': '')} onClick={this.handleClickTab.bind(null, 0)}>
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
                   className='dt-icon'
@@ -45,7 +44,7 @@ class DateTimeInput extends React.Component {
                 </svg>
                 {i18n.Date}
               </button>
-              <button type="button" className={cx('dt-btn', {'is-active': tab === 1})} onClick={this.handleClickTab.bind(null, 1)}>
+              <button type="button" className="dt-btn" onClick={this.handleClickTab.bind(null, 1)}>
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
                   className="dt-icon"

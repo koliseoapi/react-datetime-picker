@@ -1,7 +1,21 @@
-import cx from 'classnames';
-import blacklist from 'blacklist';
 import React from 'react';
-import { range, chunk, bindAll } from 'lodash';
+import { bindAll } from './util';
+
+// equivalent to lodash.range()
+// https://www.reindex.io/blog/you-might-not-need-underscore/
+function range(start, end) {
+  return Array.from(Array(end - start), (_, i) => start + i)
+}
+
+// replace lodash.chunk()
+// https://stackoverflow.com/questions/8495687/split-array-into-chunks
+function chunk(array, chunk) {
+  var i, j, result = [];
+  for (i = 0, j = array.length; i < j; i += chunk) {
+    result.push(array.slice(i, i + chunk));
+  }
+  return result;
+}
 
 function isPrevMonth(day, weekIndex) {
   return (weekIndex === 0 && day > 7);
@@ -11,36 +25,43 @@ function isNextMonth(day, weekIndex) {
   return (weekIndex >= 4 && day <= 14);
 }
 
-var Day = function(props) {
-  var { day, weekIndex, isValid, selected } = props;
-  var prevMonth = isPrevMonth(day, weekIndex);
-  var nextMonth = isNextMonth(day, weekIndex);
-  var elementProps = blacklist(props, 'day', 'weekIndex', 'selected', 'className', 'isValid');
-  elementProps.className = cx({
-    'dt-prev-month': prevMonth,
-    'dt-next-month': nextMonth,
-    'dt-invalid': !isValid,
-    'dt-current-day': selected
-  });
-  return <td {...elementProps}>{day}</td>;
+function Day(allProps) {
+  const { day, weekIndex, isValid, selected, ...props } = allProps;
+  const prevMonth = isPrevMonth(day, weekIndex);
+  const nextMonth = isNextMonth(day, weekIndex);
+  const classes = [];
+  prevMonth && classes.push('dt-prev-month');
+  nextMonth && classes.push('dt-next-month');
+  !isValid && classes.push('dt-invalid');
+  selected && classes.push('dt-current-day');
+  props.className = classes.join(' ');
+  return <td {...props}>{day}</td>;
 }
 
+// 
+// Render a month in the calendar
+//
 class Calendar extends React.Component {
   
   constructor(props) {
     super(props);
     this.state = {
       moment: props.moment.clone()
-    }
-    bindAll(this, [ 'selectDate', 'nextMonth', 'prevMonth' ]);
+    };
+    bindAll(this, ['selectDate', 'nextMonth', 'prevMonth']);
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({
+      moment: nextProps.moment.clone()
+    });
+    /*
     if (this.state.moment.isSame(nextProps.moment)) {
       this.state.moment.locale(nextProps.moment.locale());
     } else {
       this.state.moment = nextProps.moment.clone();
     }
+    */
   }
 
   render() { 
@@ -61,7 +82,7 @@ class Calendar extends React.Component {
     var weeks = moment.localeData()._weekdaysShort;
 
     return (
-      <div className={cx('dt-calendar', this.props.className)}>
+      <div className={'dt-calendar ' + (this.props.className || '')}>
         <div className="dt-toolbar">
           <button type="button" className="dt-prev-month" onClick={this.prevMonth}>
             <i className="dt-prev-month-icon" />

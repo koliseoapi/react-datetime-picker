@@ -2,5 +2,5 @@
 // this file is used by our Mocha execution command
 // see http://stackoverflow.com/questions/35040978/babel-unexpected-token-import-when-running-mocha-tests
 require('babel-core/register')({
-  ignore: /node_modules\/(?!react-data-input|react-rug-menu|moment|alt-ng|react-moment-datetime|react-async-autocomplete|react-simple-tags-input)/
+  ignore: /node_modules\/(?!moment)/
 })
