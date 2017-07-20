@@ -31,7 +31,7 @@ class DateTimeInput extends React.Component {
           required={required}
         />
         { isOpen && 
-          <dialog className="dt-input-moment" open> 
+          <dialog className="dt-dialog" open> 
             <Calendar
               moment={currentMoment}
               onChange={onChange}

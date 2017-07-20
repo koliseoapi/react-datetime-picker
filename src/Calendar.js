@@ -29,7 +29,7 @@ function Day(allProps) {
   const { day, weekIndex, isValid, selected, ...props } = allProps;
   const prevMonth = isPrevMonth(day, weekIndex);
   const nextMonth = isNextMonth(day, weekIndex);
-  const classes = [];
+  const classes = ['dt-day'];
   prevMonth && classes.push('dt-prev-month');
   nextMonth && classes.push('dt-next-month');
   !isValid && classes.push('dt-invalid');
@@ -82,21 +82,19 @@ class Calendar extends React.Component {
     var weeks = moment.localeData()._weekdaysShort;
 
     return (
-      <div className={'dt-calendar ' + (this.props.className || '')}>
+      <div className="dt-calendar">
         <div className="dt-toolbar">
-          <button type="button" className="dt-prev-month" onClick={this.prevMonth}>
-            <i className="dt-prev-month-icon" />
+          <button type="button" className="dt-button dt-btn-prev-month" onClick={this.prevMonth}>
           </button>
           <span className="dt-current-date">{moment.format('MMMM YYYY')}</span>
-          <button type="button" className="dt-next-month" onClick={this.nextMonth}>
-            <i className="dt-next-month-icon" />
+          <button type="button" className="dt-button  dt-btn-next-month" onClick={this.nextMonth}>
           </button>
         </div>
 
-        <table>
+        <table className="dt-calendar-table">
           <thead>
             <tr>
-              { weeks.map((weekDay, index) => <td key={index}>{weekDay}</td>) }
+              { weeks.map((weekDay, index) => <th className="dt-th" key={index}>{weekDay}</th>) }
             </tr>
           </thead>
           <tbody>
@@ -109,7 +107,12 @@ class Calendar extends React.Component {
                       const isValid = this.props.isValid(newDate);
                       const selected = newDate.isSame(this.props.moment);
                       return (
-                        <Day key={day} day={day} selected={selected} weekIndex={weekIndex} isValid={isValid}
+                        <Day 
+                          key={day} 
+                          day={day} 
+                          selected={selected} 
+                          weekIndex={weekIndex} 
+                          isValid={isValid}
                           onClick={isValid && this.selectDate.bind(null, day, weekIndex)}
                         />
                       )
