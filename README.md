@@ -1,17 +1,44 @@
 # react-moment-datetime 
 
+[![Build Status](https://secure.travis-ci.org/koliseoapi/react-moment-datetime.svg?branch=master)](http://travis-ci.org/koliseoapi/react-moment-datetime)
+[![Coverage Status](https://img.shields.io/coveralls/koliseoapi/react-moment-datetime.svg?style=flat)](https://coveralls.io/r/koliseoapi/react-moment-datetime)
+<a href="https://www.npmjs.com/package/react-moment-datetime"><img alt="NPM Downloads" src="https://img.shields.io/npm/dm/react-moment-datetime.svg?maxAge=43200"></a>
+
 React datetime picker powered by [momentjs](http://momentjs.com). See the [demo here](http://koliseoapi.github.io/react-moment-datetime).
 
 ### Usage
 
 ``` javascript
 <DateTimeInput
-  moment={this.state.moment}
-  onChange={this.handleChange}
-  onClose={this.handleClose}
-  isValid={() => true} // default
+  value={this.state.date}
+  onChange={this.onChange}
+  showTime={true}
 />
 ```
+
+Available properties:
+
+| Property | Type | Content  | Default Value |
+| --- | --- | --- | --- |
+| `i8n` | JSON | Entries to render i18n content | ```json
+i18n: {
+    Date: 'Date',
+    Time: 'Time',
+    Close: 'Close',
+    Hours: 'Hours',
+    Minutes: 'Minutes',
+
+    // date format
+    format: 'YYYY-MM-DD',
+
+    // locale ISO
+    locale: 'en'
+  }
+```
+| `showTime` | boolean | True to display a separate input field for the time | `true`
+| `value` | Date | The current value | `undefined`
+| `isValid` | function | A function that receives a date and returns true if the date is valid input. Can be used to set a maximum or minimum value in the calendar | `(moment) => true`
+| `onChange` | function | A function that will receive the value when the user introduces a valid date. Receives a JSON of `name`, `value` and `strValue` | `undefined`
 
 Check [app.js](https://github.com/koliseoapi/react-moment-datetime/blob/master/example/app.js) for a working example.
 
