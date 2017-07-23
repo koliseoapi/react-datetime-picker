@@ -25983,23 +25983,27 @@ var DateTimeInput = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'dt-inputs' },
-          _react2.default.createElement('input', {
-            type: 'text',
-            className: 'dt-input dt-input-date',
-            value: dateValue,
-            required: required,
-            placeholder: i18n.format,
-            pattern: (0, _util.dateFormatToPattern)(i18n.format),
-            name: name,
-            ref: 'dateInput',
+          _react2.default.createElement(
+            'div',
+            { className: 'dt-input-date-wrapper' },
+            _react2.default.createElement('input', {
+              type: 'text',
+              className: 'dt-input dt-input-date',
+              value: dateValue,
+              required: required,
+              placeholder: i18n.format,
+              pattern: (0, _util.dateFormatToPattern)(i18n.format),
+              name: name,
+              ref: 'dateInput',
 
-            onKeyDown: this.onKeyDown,
-            onClick: this.onInputClick,
-            onFocus: this.onInputFocus,
-            onBlur: this.onInputBlur,
-            onChange: this.onDateChange
+              onKeyDown: this.onKeyDown,
+              onClick: this.onInputClick,
+              onFocus: this.onInputFocus,
+              onBlur: this.onInputBlur,
+              onChange: this.onDateChange
 
-          }),
+            })
+          ),
           showTime && _react2.default.createElement('input', {
             type: 'text',
             className: 'dt-input dt-input-time',
