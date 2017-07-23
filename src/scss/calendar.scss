@@ -2,6 +2,11 @@
 
 .dt-dialog {
   border: 1px solid $gray-dark;
+  margin: .5rem 0;
+  z-index: 2;
+}
+.dt-dialog::backdrop {
+  background: rgba(0, 0, 0,.8);
 }
 
 // toolbar above the calendar
@@ -25,18 +30,21 @@
   width: 30px;
   height: 30px;
   line-height: 30px;
-  color: #ffffff;
-  border: 1px solid $blue;
   border-radius: 50%;
-  background: $blue;
-  opacity: .8;
+  border: 0;
+  color: $blue;
+  cursor: pointer;
+  background-color: transparent;
+
   &:before {
     margin: 0 2px;
     font-size: 32px;
     line-height: 23px;
   }
+  
   &:hover, &:focus {
-    opacity: 1;
+    color: #ffffff;
+    background: $blue;
   }
 }
 
@@ -51,34 +59,43 @@
 
 
 .dt-calendar-table {
-  width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
   table-layout: fixed;
 }
 
-.dt-day,
+.dt-day-a, 
 .dt-th {
-  padding: 8px 0;
   text-align: center;
   cursor: pointer;
   color: $black;
-  border: 1px solid $gray;
 }
 
 .dt-th {
+  border: 1px solid $gray;
+  padding: .5rem;
+  width: 2.8rem;
   color: $blue;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 12px;
 }
+.dt-day {
+  border: 1px solid $gray;
+  padding: 0;
+}
+.dt-day-a {
+  padding: .5rem;
+  width: 2.8rem;
+  display: block;
+  text-decoration: none;
+}
 
-.dt-day:hover {
+.dt-day-a:hover {
   background: $blue-light;
   border-color: $blue;
   color: $white;
 }
-
 
 .dt-current-day {
   background-color: $blue !important;

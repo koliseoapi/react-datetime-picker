@@ -12,7 +12,7 @@
         "--no-timeouts",
         "--require",
         ".vscode/registerBabel.js",
-        "src/DateTimeInputTest.js"
+        "test/DateTimeInputTest.js"
       ],
       "cwd": "${workspaceRoot}"
     }

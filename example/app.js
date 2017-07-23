@@ -1,78 +1,87 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DateTimeInput from '../index';
-import { bindAll } from 'lodash';
+import moment from 'moment';
+import { bindAll } from '../src/util';
 
-var i18n = {
-  en: {
-    Date: 'Date',
-    Time: 'Time',
-    Close: 'Close',
-    Hours: 'Hours',
-    Minutes: 'Minutes'
-  },
-  es: {
-    Date: 'Fecha',
-    Time: 'Hora',
-    Close: 'Cerrar',
-    Hours: 'Horas',
-    Minutes: 'Minutos'
-  }
-}
+var enValues = {
+  Date: 'Date',
+  Time: 'Time',
+  Close: 'Close',
+  Hours: 'Hours',
+  Minutes: 'Minutes',
+  format: 'MM-DD-YYYY',
+  locale: 'en'
+};
 
-const defaultLocale = 'en';
+var esValues = {
+  Date: 'Fecha',
+  Time: 'Hora',
+  Close: 'Cerrar',
+  Hours: 'Horas',
+  Minutes: 'Minutos',
+  format: 'DD-MM-YYYY',
+  locale: 'es'
+};
 
 class App extends React.Component {
 
-  constructor(props) {
-    super(props);
-    bindAll(this, [ 'handleChange', 'handleClose', 'onLocaleChange' ])
+  constructor() {
+    super();
     this.state = {
-      locale: defaultLocale,
-      i18n: i18n[defaultLocale],
-      value: undefined
+      from: new Date()
     }
+    bindAll(this, [ 'onChange' ]);
   }
 
   render() {
+    const { from, until } = this.state;
     return (
       <div className="app">
         <h1>react-moment-datetime</h1>
-        <h2>React datetime picker powered by momentjs</h2>
+        <p>React datetime picker powered by momentjs</p>
         <form>
-          <label htmlFor="locale">Locale</label>
-          <select name="locale" value={this.state.locale} onChange={this.onLocaleChange}>
-            <option value="en">English</option>
-            <option value="es">Español</option>
-          </select>
-          <label htmlFor="date" className="dt-input-label">Date</label>
+          <label htmlFor="from" className="dt-input-label">
+            Date from (US English, date+time, required)
+          </label>
           <DateTimeInput
-            value={this.state.value}
-            locale={this.state.locale}
-            i18n={this.state.i18n}
-            onChange={this.handleChange}
-            onClose={this.handleClose}
+            name="from"
+            value={from}
+            i18n={enValues}
+            onChange={this.onChangeFrom}
             isValid={(moment) => {
-              return moment.isAfter(new Date());
+              return !until || moment.isBefore(until);
             }}
+            required={true}
+          />
+
+
+          <label htmlFor="until" className="dt-input-label">
+            Date until (Spanish, date only, optional)
+          </label>
+          <DateTimeInput
+            name="until"
+            value={until}
+            i18n={esValues}
+            onChange={this.onChange}
+            isValid={(moment) => {
+              return !from || moment.isAfter(from);
+            }}
+            showTime={false}
           />
         </form>
       </div>
     );
   }
 
-  onLocaleChange(e) {
-    var locale = e.target.value;
-    this.setState({ locale, i18n: i18n[locale], value: this.state.value });
+  onChange({ name, value }) {
+    const formattedValue = new moment(value).format('YYYY-MM-DD HH:mm');
+    console.log(`New value for ${name}: ${formattedValue}`);
+    const state = {};
+    state[name] = value;
+    this.setState(state);
   }
 
-  handleChange(moment) {
-    this.setState({ value: !moment? undefined : moment.format('YYYY-MM-DD HH:mm') });
-  }
-
-  handleClose() {
-    console.log('closed', this.state.value);
-  }
 };
 
 ReactDOM.render(<App/>, document.getElementById('app'));
