@@ -17,10 +17,18 @@ Check [app.js](https://github.com/koliseoapi/react-moment-datetime/blob/master/e
 
 ### Development
 
+Work on the code:
+
 ```sh
 npm install
 npm start
 xdg-open http://localhost:8080/example/
+```
+
+Work on the demo:
+
+```sh
+./publish.sh
 ```
 
 ### License and acknowledgements

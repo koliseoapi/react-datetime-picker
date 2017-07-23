@@ -132,23 +132,25 @@ class DateTimeInput extends React.Component {
     return (
       <div className="dt-input-container" id={`dt-${id}`}>
         <div className="dt-inputs">
-          <input
-            type="text"
-            className="dt-input dt-input-date"
-            value={dateValue}
-            required={required}
-            placeholder={i18n.format}
-            pattern={dateFormatToPattern(i18n.format)}
-            name={name}
-            ref="dateInput"
+          <div className="dt-input-date-wrapper">
+            <input
+              type="text"
+              className="dt-input dt-input-date"
+              value={dateValue}
+              required={required}
+              placeholder={i18n.format}
+              pattern={dateFormatToPattern(i18n.format)}
+              name={name}
+              ref="dateInput"
 
-            onKeyDown={this.onKeyDown}
-            onClick={this.onInputClick}
-            onFocus={this.onInputFocus}
-            onBlur={this.onInputBlur}
-            onChange={this.onDateChange}
+              onKeyDown={this.onKeyDown}
+              onClick={this.onInputClick}
+              onFocus={this.onInputFocus}
+              onBlur={this.onInputBlur}
+              onChange={this.onDateChange}
 
-          />
+            />
+          </div>
 
           { showTime && 
             <input
