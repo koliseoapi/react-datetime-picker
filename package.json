@@ -54,6 +54,7 @@
     "build:css": "node-sass --output-style compressed -o example/css src/scss/datetime.scss",
     "watch:css": "onchange 'src/scss/*.scss' -- npm run build:css",
     "dev": "webpack-dev-server --inline --hot --progress --colors",
-    "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register --require .vscode/registerBabel.js test/*Test.js"
+    "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register --require .vscode/registerBabel.js test/*Test.js",
+    "postversion": "git push && git push --tags"
   }
 }
