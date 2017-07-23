@@ -20,25 +20,29 @@ Available properties:
 
 | Property | Type | Content  | Default Value |
 | --- | --- | --- | --- |
-| `i8n` | JSON | Entries to render i18n content | ```json
-i18n: {
-    Date: 'Date',
-    Time: 'Time',
-    Close: 'Close',
-    Hours: 'Hours',
-    Minutes: 'Minutes',
-
-    // date format
-    format: 'YYYY-MM-DD',
-
-    // locale ISO
-    locale: 'en'
-  }
-```
+| `i8n` | JSON | Entries to render i18n content | See below for an example
 | `showTime` | boolean | True to display a separate input field for the time | `true`
 | `value` | Date | The current value | `undefined`
 | `isValid` | function | A function that receives a date and returns true if the date is valid input. Can be used to set a maximum or minimum value in the calendar | `(moment) => true`
 | `onChange` | function | A function that will receive the value when the user introduces a valid date. Receives a JSON of `name`, `value` and `strValue` | `undefined`
+
+The default value of `i18n`:
+
+```js
+{
+  Date: 'Date',
+  Time: 'Time',
+  Close: 'Close',
+  Hours: 'Hours',
+  Minutes: 'Minutes',
+
+  // date format
+  format: 'YYYY-MM-DD',
+
+  // locale ISO
+  locale: 'en'
+}
+```
 
 Check [app.js](https://github.com/koliseoapi/react-moment-datetime/blob/master/example/app.js) for a working example.
 
