@@ -25482,7 +25482,7 @@ var App = function (_React$Component) {
             name: 'from',
             value: from,
             i18n: enValues,
-            onChange: this.onChangeFrom,
+            onChange: this.onChange,
             isValid: function isValid(moment) {
               return !until || moment.isBefore(until);
             },
@@ -25512,7 +25512,7 @@ var App = function (_React$Component) {
       var name = _ref.name,
           value = _ref.value;
 
-      var formattedValue = new _moment2.default(value).format('YYYY-MM-DD HH:mm');
+      var formattedValue = typeof value === 'undefined' ? 'undefined' : new _moment2.default(value).format('YYYY-MM-DD HH:mm');
       console.log('New value for ' + name + ': ' + formattedValue);
       var state = {};
       state[name] = value;
@@ -25588,7 +25588,10 @@ function Day(allProps) {
     { className: 'dt-day' },
     _react2.default.createElement(
       'a',
-      _extends({ className: classes.join(' '), href: '#' }, props),
+      _extends({
+        className: classes.join(' '),
+        tabIndex: '-1'
+      }, props),
       day
     )
   );
@@ -25679,8 +25682,7 @@ var Calendar = function (_React$Component) {
       var moment = this.state.moment;
       var _props = this.props,
           dateValue = _props.dateValue,
-          format = _props.i18n.format,
-          onBlur = _props.onBlur;
+          format = _props.i18n.format;
 
 
       var currentDay = moment.date();
@@ -25703,7 +25705,7 @@ var Calendar = function (_React$Component) {
             type: 'button',
             className: 'dt-button dt-btn-prev-month',
             onClick: this.prevMonth,
-            onBlur: onBlur
+            tabIndex: '-1'
           }),
           _react2.default.createElement(
             'span',
@@ -25714,7 +25716,7 @@ var Calendar = function (_React$Component) {
             type: 'button',
             className: 'dt-button dt-btn-next-month',
             onClick: this.nextMonth,
-            onBlur: onBlur
+            tabIndex: '-1'
           })
         ),
         _react2.default.createElement(
@@ -25753,7 +25755,7 @@ var Calendar = function (_React$Component) {
                     weekIndex: weekIndex,
                     isValid: isValid,
 
-                    onClick: isValid && _this2.selectDate.bind(null, day, weekIndex)
+                    onMouseDown: isValid && _this2.selectDate.bind(null, day, weekIndex)
                   });
                 })
               );
@@ -25820,7 +25822,7 @@ var DateTimeInput = function (_React$Component) {
 
     _this.state = _this.dateToValues(props.value);
     _this.state.id = COUNTER++;
-    (0, _util.bindAll)(_this, ['onClose', 'onInputBlur', 'onCalendarChange', 'onInputFocus', 'onDateChange', 'onTimeChange', 'onInputClick', 'onKeyDown']);
+    (0, _util.bindAll)(_this, ['onClose', 'onCalendarChange', 'onInputBlur', 'onInputFocus', 'onDateChange', 'onTimeChange', 'onInputClick', 'onKeyDown', 'triggerChange']);
     return _this;
   }
 
@@ -25834,17 +25836,16 @@ var DateTimeInput = function (_React$Component) {
   }, {
     key: 'onDateChange',
     value: function onDateChange(e) {
+      console.log("1: " + e.target.value);
       this.setState({
-        dateValue: e.target.value,
-        isOpen: true
+        dateValue: e.target.value
       });
     }
   }, {
     key: 'onTimeChange',
     value: function onTimeChange(e) {
       this.setState({
-        timeValue: e.target.value,
-        isOpen: true
+        timeValue: e.target.value
       });
     }
 
@@ -25868,14 +25869,6 @@ var DateTimeInput = function (_React$Component) {
         dateValue: currentMoment.format(format),
         timeValue: currentMoment.format('HH:mm')
       };
-    }
-  }, {
-    key: 'onInputFocus',
-    value: function onInputFocus() {
-      this.setState({
-        focused: true,
-        isOpen: true
-      });
     }
   }, {
     key: 'triggerChange',
@@ -25914,16 +25907,27 @@ var DateTimeInput = function (_React$Component) {
       });
     }
   }, {
+    key: 'onInputFocus',
+    value: function onInputFocus() {
+      this.setState({
+        focused: true,
+        isOpen: true
+      });
+    }
+
+    // moving focus to something else, close dialog
+
+  }, {
     key: 'onInputBlur',
     value: function onInputBlur(event) {
-
-      // moving focus to something else, close dialog
       var newElement = event.relatedTarget;
-      this.setState({
-        focused: false,
-        isOpen: !!(newElement && newElement.closest('#dt-' + this.state.id))
-      });
-
+      if (newElement) {
+        var isOpen = !!(newElement && newElement.closest('#dt-' + this.state.id));
+        this.setState({
+          focused: false,
+          isOpen: isOpen
+        });
+      }
       this.triggerChange();
     }
 
@@ -25931,15 +25935,20 @@ var DateTimeInput = function (_React$Component) {
 
   }, {
     key: 'onCalendarChange',
-    value: function onCalendarChange(date) {
-      var _props$i18n3 = this.props.i18n,
-          locale = _props$i18n3.locale,
-          format = _props$i18n3.format;
+    value: function onCalendarChange(dateMoment) {
+      var _this2 = this;
 
-      this.refs.dateInput.focus();
+      var format = this.props.i18n.format;
+
       this.setState({
-        dateValue: new _moment2.default(date).locale(locale).format(format),
+        dateValue: dateMoment.format(format),
         isOpen: false
+      }, function () {
+        //this.triggerChange();
+        setTimeout(function () {
+          _this2.refs.dateInput.focus();
+          _this2.setState({ isOpen: false });
+        }, 0);
       });
     }
   }, {
@@ -25958,6 +25967,8 @@ var DateTimeInput = function (_React$Component) {
       var handled = false;
       if (e.keyCode == 27) {
         this.onClose();
+      } else {
+        this.state.isOpen || this.setState({ isOpen: true });
       }
     }
   }, {
@@ -25976,6 +25987,7 @@ var DateTimeInput = function (_React$Component) {
           dateValue = _state2.dateValue,
           timeValue = _state2.timeValue,
           id = _state2.id;
+
 
       return _react2.default.createElement(
         'div',
@@ -26012,32 +26024,41 @@ var DateTimeInput = function (_React$Component) {
             required: required,
             placeholder: 'hh:mm',
 
-            onKeyDown: this.onKeyDown,
-            onClick: this.onInputClick,
-            onFocus: this.onInputFocus,
             onBlur: this.onInputBlur,
             onChange: this.onTimeChange
 
           })
         ),
         isOpen && _react2.default.createElement(
-          'dialog',
-          { className: 'dt-dialog', open: true },
-          _react2.default.createElement(_Calendar2.default, {
-            dateValue: dateValue,
-            i18n: i18n,
-            isValid: isValid,
-
-            onChange: this.onCalendarChange,
-            onBlur: this.onInputBlur
-          }),
+          'div',
+          { 'aria-hidden': 'true' },
+          _react2.default.createElement('div', {
+            className: 'dt-dialog-backdrop',
+            onClick: this.onClose }),
           _react2.default.createElement(
-            'div',
-            { className: 'dt-actions' },
+            'dialog',
+            { className: 'dt-dialog', open: true },
+            _react2.default.createElement(_Calendar2.default, {
+              dateValue: dateValue,
+              i18n: i18n,
+              isValid: isValid,
+
+              onChange: this.onCalendarChange
+            }),
             _react2.default.createElement(
-              'button',
-              { type: 'button', className: 'dt-btn dt-close', onClick: this.onClose },
-              i18n.Close
+              'div',
+              { className: 'dt-actions' },
+              _react2.default.createElement(
+                'button',
+                {
+                  type: 'button',
+                  className: 'dt-btn dt-close',
+                  tabIndex: '-1',
+
+                  onClick: this.onClose
+                },
+                i18n.Close
+              )
             )
           )
         )
