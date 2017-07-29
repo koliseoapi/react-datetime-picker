@@ -23,7 +23,6 @@ class DateTimeInput extends React.Component {
   }
 
   onDateChange(e) {
-    console.log("1: " + e.target.value);
     this.setState({
       dateValue: e.target.value
     });
