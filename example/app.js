@@ -48,7 +48,7 @@ class App extends React.Component {
             name="from"
             value={from}
             i18n={enValues}
-            onChange={this.onChangeFrom}
+            onChange={this.onChange}
             isValid={(moment) => {
               return !until || moment.isBefore(until);
             }}
@@ -75,7 +75,7 @@ class App extends React.Component {
   }
 
   onChange({ name, value }) {
-    const formattedValue = new moment(value).format('YYYY-MM-DD HH:mm');
+    const formattedValue = typeof value === 'undefined'? 'undefined' : new moment(value).format('YYYY-MM-DD HH:mm');
     console.log(`New value for ${name}: ${formattedValue}`);
     const state = {};
     state[name] = value;

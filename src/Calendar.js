@@ -20,7 +20,15 @@ function Day(allProps) {
   selected && classes.push('dt-current-day');
 
   return (
-    <td className="dt-day"><a className={classes.join(' ')} href='#' {...props}>{day}</a></td>
+    <td className="dt-day">
+      <a 
+        className={classes.join(' ')} 
+        tabIndex="-1"
+        {...props}
+      >
+        {day}
+      </a>
+    </td>
   );
 }
 
@@ -86,7 +94,7 @@ class Calendar extends React.Component {
 
   render() { 
     var moment = this.state.moment;
-    var { dateValue, i18n: { format }, onBlur } = this.props;
+    var { dateValue, i18n: { format } } = this.props;
 
     var currentDay = moment.date();
     var prevMonthLastDay = moment.clone().subtract(1, 'month').endOf('month').date();
@@ -109,7 +117,7 @@ class Calendar extends React.Component {
             type="button" 
             className="dt-button dt-btn-prev-month" 
             onClick={this.prevMonth}
-            onBlur={onBlur}
+            tabIndex="-1"
           >
           </button>
           <span className="dt-current-date">{moment.format('MMMM YYYY')}</span>
@@ -117,7 +125,7 @@ class Calendar extends React.Component {
             type="button" 
             className="dt-button dt-btn-next-month" 
             onClick={this.nextMonth}
-            onBlur={onBlur}
+            tabIndex="-1"
           >
           </button>
         </div>
@@ -145,7 +153,7 @@ class Calendar extends React.Component {
                           weekIndex={weekIndex} 
                           isValid={isValid}
 
-                          onClick={isValid && this.selectDate.bind(null, day, weekIndex)}
+                          onMouseDown={isValid && this.selectDate.bind(null, day, weekIndex)}
                         />
                       )
                     })

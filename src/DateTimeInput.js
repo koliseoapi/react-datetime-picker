@@ -12,9 +12,9 @@ class DateTimeInput extends React.Component {
     this.state = this.dateToValues(props.value);
     this.state.id = COUNTER++;
     bindAll(this, [ 
-      'onClose', 'onInputBlur', 'onCalendarChange',
+      'onClose', 'onCalendarChange', 'onInputBlur',
       'onInputFocus', 'onDateChange', 'onTimeChange',
-      'onInputClick' , 'onKeyDown'
+      'onInputClick', 'onKeyDown', 'triggerChange'
     ]);
   }
 
@@ -23,17 +23,16 @@ class DateTimeInput extends React.Component {
   }
 
   onDateChange(e) {
+    console.log("1: " + e.target.value);
     this.setState({
-      dateValue: e.target.value,
-      isOpen: true
-    })
+      dateValue: e.target.value
+    });
   }
 
   onTimeChange(e) {
     this.setState({
-      timeValue: e.target.value,
-      isOpen: true
-    })
+      timeValue: e.target.value
+    });
   }
 
   // translate a date to the corresponding input values
@@ -50,13 +49,6 @@ class DateTimeInput extends React.Component {
       dateValue: currentMoment.format(format),
       timeValue: currentMoment.format('HH:mm')
     }
-  }
-
-  onInputFocus() {
-    this.setState({
-      focused: true,
-      isOpen: true
-    });
   }
 
   triggerChange() {
@@ -88,26 +80,38 @@ class DateTimeInput extends React.Component {
 
   }
 
-  onInputBlur(event) {
-
-    // moving focus to something else, close dialog
-    const newElement = event.relatedTarget;
+  onInputFocus() {
     this.setState({
-      focused: false,
-      isOpen: !!(newElement && newElement.closest(`#dt-${this.state.id}`))
-    })
+      focused: true,
+      isOpen: true
+    });
+  }
 
+  // moving focus to something else, close dialog
+  onInputBlur(event) {
+    const newElement = event.relatedTarget;
+    if (newElement) {
+      const isOpen = !!(newElement && newElement.closest(`#dt-${this.state.id}`));
+      this.setState({
+        focused: false,
+        isOpen: isOpen
+      })
+    }
     this.triggerChange();
-
   }
 
   // a date has been chosen in the calendar
-  onCalendarChange(date) {
-    const { locale, format } = this.props.i18n;
-    this.refs.dateInput.focus();
+  onCalendarChange(dateMoment) {
+    const { format } = this.props.i18n;
     this.setState({
-      dateValue: new moment(date).locale(locale).format(format),
+      dateValue: dateMoment.format(format),
       isOpen: false
+    }, () => {
+      //this.triggerChange();
+      setTimeout(() => {
+        this.refs.dateInput.focus()
+        this.setState({ isOpen: false });
+      }, 0)
     });
   }
 
@@ -123,12 +127,15 @@ class DateTimeInput extends React.Component {
     var handled = false
     if (e.keyCode == 27) {
       this.onClose();
+    } else {
+      this.state.isOpen || this.setState({ isOpen: true });
     }
   }
 
   render() {
     const { value, i18n, isValid, locale, required, showTime, name } = this.props;
     const { isOpen, dateValue, timeValue, id } = this.state;
+    
     return (
       <div className="dt-input-container" id={`dt-${id}`}>
         <div className="dt-inputs">
@@ -161,30 +168,40 @@ class DateTimeInput extends React.Component {
               required={required}
               placeholder="hh:mm"
 
-              onKeyDown={this.onKeyDown}
-              onClick={this.onInputClick}
-              onFocus={this.onInputFocus}
               onBlur={this.onInputBlur}
               onChange={this.onTimeChange}
-              
+
             />  
           }
         </div>
 
         { isOpen && 
-          <dialog className="dt-dialog" open>
-            <Calendar
-              dateValue={dateValue}
-              i18n={i18n}
-              isValid={isValid}
-
-              onChange={this.onCalendarChange}
-              onBlur={this.onInputBlur}
-            />
-            <div className="dt-actions">
-              <button type="button" className="dt-btn dt-close" onClick={this.onClose}>{i18n.Close}</button>
+          <div aria-hidden="true">
+            <div 
+              className="dt-dialog-backdrop" 
+              onClick={this.onClose}>
             </div>
-          </dialog>
+            <dialog className="dt-dialog" open>
+              <Calendar
+                dateValue={dateValue}
+                i18n={i18n}
+                isValid={isValid}
+
+                onChange={this.onCalendarChange}
+              />
+              <div className="dt-actions">
+                <button 
+                  type="button" 
+                  className="dt-btn dt-close" 
+                  tabIndex="-1"
+
+                  onClick={this.onClose}
+                >
+                  {i18n.Close}
+                </button>
+              </div>
+            </dialog>
+          </div>
         }
       </div>
     );
