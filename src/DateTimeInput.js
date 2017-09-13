@@ -162,7 +162,7 @@ class DateTimeInput extends React.Component {
             <input
               type="text"
               className="dt-input dt-input-time"
-              pattern="[0-2]?[0-2]:[0-5]?[0-9]"
+              pattern="([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
               value={timeValue}
               required={required}
               placeholder="hh:mm"
