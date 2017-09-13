@@ -20,7 +20,7 @@ Available properties:
 
 | Property | Type | Content  | Default Value |
 | --- | --- | --- | --- |
-| i8n | `JSON` | Entries to render i18n content | See below for an example
+| i18n | `JSON` | Entries to render i18n content | See below for an example
 | showTime | `boolean` | True to display a separate input field for the time | `true`
 | value | `Date` | The current value | `undefined`
 | isValid | `function` | A function that receives a date and returns true if the date is valid input. Can be used to set a maximum or minimum value in the calendar | `(moment) => true`
