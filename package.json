@@ -52,10 +52,10 @@
   },
   "homepage": "https://github.com/koliseoapi/react-moment-datetime#readme",
   "scripts": {
-    "start": "npm-run-all --parallel dev watch:css",
-    "build:css": "node-sass --output-style compressed -o example/css src/scss/datetime.scss",
+    "watch": "npm-run-all --parallel watch:**",
+    "build": "node-sass --output-style compressed -o example/css src/scss/datetime.scss",
     "watch:css": "onchange 'src/scss/*.scss' -- npm run build:css",
-    "dev": "webpack-dev-server --inline --hot --progress --colors",
+    "watch:js": "webpack-dev-server --inline --hot --progress --colors",
     "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register --require .vscode/registerBabel.js test/*Test.js",
     "postversion": "git push && git push --tags",
     "coverage": "NODE_ENV=test node_modules/.bin/nyc --reporter=lcov --reporter=text node_modules/.bin/_mocha --compilers js:babel-register test/*Test.js"

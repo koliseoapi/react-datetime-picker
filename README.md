@@ -52,7 +52,8 @@ Work on the code:
 
 ```sh
 npm install
-npm start
+npm run build
+npm run watch
 xdg-open http://localhost:8080/example/
 ```
 
