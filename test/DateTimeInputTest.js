@@ -84,5 +84,17 @@ describe('DateTimeInput', function () {
     equal('xxx', dateInput.prop("value"));
   });
 
+  it('should render disabled inputs', function () {
+    const onChange = sinon.spy();
+    const value = moment("2014-10-25T10:20").toDate();
+    mountInput({ onChange, disabled: true, value });
+    dateInput.simulate('focus');
+    dateInput.simulate('change', { target: { value: '2014-10-05' } });
+    dateInput.simulate('blur');
+    equal(dateInput.getDOMNode().disabled, true);
+    equal(0, onChange.callCount);
+    equal('2014-10-25', dateInput.prop("value"));
+  });
+
 });
 

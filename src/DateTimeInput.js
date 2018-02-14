@@ -132,7 +132,7 @@ class DateTimeInput extends React.Component {
   }
 
   render() {
-    const { value, i18n, isValid, locale, required, showTime, name } = this.props;
+    const { value, i18n, isValid, locale, required, showTime, name, disabled } = this.props;
     const { isOpen, dateValue, timeValue, id } = this.state;
     
     return (
@@ -147,13 +147,14 @@ class DateTimeInput extends React.Component {
               placeholder={i18n.format}
               pattern={dateFormatToPattern(i18n.format)}
               name={name}
+              disabled={disabled}
               ref="dateInput"
 
-              onKeyDown={this.onKeyDown}
-              onClick={this.onInputClick}
-              onFocus={this.onInputFocus}
-              onBlur={this.onInputBlur}
-              onChange={this.onDateChange}
+              onKeyDown={!disabled? this.onKeyDown : undefined}
+              onClick={!disabled? this.onInputClick : undefined}
+              onFocus={!disabled? this.onInputFocus : undefined}
+              onBlur={!disabled? this.onInputBlur : undefined}
+              onChange={!disabled? this.onDateChange : undefined}
 
             />
           </div>
@@ -165,10 +166,11 @@ class DateTimeInput extends React.Component {
               pattern="([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
               value={timeValue}
               required={required}
+              disabled={disabled}
               placeholder="hh:mm"
 
-              onBlur={this.onInputBlur}
-              onChange={this.onTimeChange}
+              onBlur={!disabled? this.onInputBlur : undefined}
+              onChange={!disabled? this.onTimeChange : undefined}
 
             />  
           }
