@@ -153,7 +153,7 @@ class Calendar extends React.Component {
                           weekIndex={weekIndex} 
                           isValid={isValid}
 
-                          onMouseDown={isValid && this.selectDate.bind(null, day, weekIndex)}
+                          onMouseDown={isValid? this.selectDate.bind(null, day, weekIndex) : undefined}
                         />
                       )
                     })
