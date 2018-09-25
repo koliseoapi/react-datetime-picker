@@ -5,6 +5,12 @@
   margin: .5rem 0;
   z-index: 3;
   box-shadow: 0 0 1rem rgba(0,0,0,.1);
+  display: block;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  padding: 1rem;
+  background: $white;
 }
 .dt-dialog-backdrop {
   z-index: 1;
