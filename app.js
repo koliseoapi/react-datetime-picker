@@ -25513,7 +25513,7 @@ var Calendar = function (_React$Component) {
                     weekIndex: weekIndex,
                     isValid: isValid,
 
-                    onMouseDown: isValid && _this2.selectDate.bind(null, day, weekIndex)
+                    onMouseDown: isValid ? _this2.selectDate.bind(null, day, weekIndex) : undefined
                   });
                 })
               );
@@ -25738,7 +25738,8 @@ var DateTimeInput = function (_React$Component) {
           locale = _props.locale,
           required = _props.required,
           showTime = _props.showTime,
-          name = _props.name;
+          name = _props.name,
+          disabled = _props.disabled;
       var _state2 = this.state,
           isOpen = _state2.isOpen,
           dateValue = _state2.dateValue,
@@ -25763,13 +25764,14 @@ var DateTimeInput = function (_React$Component) {
               placeholder: i18n.format,
               pattern: (0, _util.dateFormatToPattern)(i18n.format),
               name: name,
+              disabled: disabled,
               ref: 'dateInput',
 
-              onKeyDown: this.onKeyDown,
-              onClick: this.onInputClick,
-              onFocus: this.onInputFocus,
-              onBlur: this.onInputBlur,
-              onChange: this.onDateChange
+              onKeyDown: !disabled ? this.onKeyDown : undefined,
+              onClick: !disabled ? this.onInputClick : undefined,
+              onFocus: !disabled ? this.onInputFocus : undefined,
+              onBlur: !disabled ? this.onInputBlur : undefined,
+              onChange: !disabled ? this.onDateChange : undefined
 
             })
           ),
@@ -25779,10 +25781,11 @@ var DateTimeInput = function (_React$Component) {
             pattern: '([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]',
             value: timeValue,
             required: required,
+            disabled: disabled,
             placeholder: 'hh:mm',
 
-            onBlur: this.onInputBlur,
-            onChange: this.onTimeChange
+            onBlur: !disabled ? this.onInputBlur : undefined,
+            onChange: !disabled ? this.onTimeChange : undefined
 
           })
         ),
