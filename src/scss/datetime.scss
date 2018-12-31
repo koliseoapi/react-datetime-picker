@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'calendar';
+@import "variables";
+@import "calendar";
 
 .dt-btn {
   display: inline-block;
@@ -12,9 +12,11 @@
   font-size: 16px;
   border: 0;
   border-radius: 3px;
-  opacity: .8;
+  opacity: 0.8;
 
-  &:hover, &:focus, &:active {
+  &:hover,
+  &:focus,
+  &:active {
     opacity: 1;
   }
 }
@@ -39,7 +41,7 @@
 
 .dt-input-time {
   width: 5rem;
-  margin-left: .8rem;
+  margin-left: 0.8rem;
 }
 
 $input-date-width: 8.5rem;
@@ -62,8 +64,7 @@ $input-date-width: 8.5rem;
     width: 1rem;
     height: 1rem;
     position: absolute;
-    right: .5rem;
-    top: .5rem;
+    right: 0.5rem;
+    top: 0.5rem;
   }
-
 }

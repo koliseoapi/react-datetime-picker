@@ -1,20 +1,25 @@
-import React from 'react';
-import Calendar from './Calendar';
-import moment from 'moment';
-import { bindAll, dateFormatToPattern } from './util';
+import React from "react";
+import Calendar from "./Calendar";
+import moment from "moment";
+import { bindAll, dateFormatToPattern } from "./util";
 
 let COUNTER = 0;
 
 class DateTimeInput extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = this.dateToValues(props.value);
     this.state.id = COUNTER++;
-    bindAll(this, [ 
-      'onClose', 'onCalendarChange', 'onInputBlur',
-      'onInputFocus', 'onDateChange', 'onTimeChange',
-      'onInputClick', 'onKeyDown', 'triggerChange'
+    bindAll(this, [
+      "onClose",
+      "onCalendarChange",
+      "onInputBlur",
+      "onInputFocus",
+      "onDateChange",
+      "onTimeChange",
+      "onInputClick",
+      "onKeyDown",
+      "triggerChange"
     ]);
   }
 
@@ -36,18 +41,20 @@ class DateTimeInput extends React.Component {
 
   // translate a date to the corresponding input values
   dateToValues(date) {
-    const { i18n: { format, locale } } = this.props;
+    const {
+      i18n: { format, locale }
+    } = this.props;
     if (!date) {
       return {
-        dateValue: '',
-        timeValue: ''
-      }
+        dateValue: "",
+        timeValue: ""
+      };
     }
     const currentMoment = moment(date).locale(locale);
     return {
       dateValue: currentMoment.format(format),
-      timeValue: currentMoment.format('HH:mm')
-    }
+      timeValue: currentMoment.format("HH:mm")
+    };
   }
 
   triggerChange() {
@@ -68,15 +75,18 @@ class DateTimeInput extends React.Component {
 
     // notify of date change
     const onChange = this.props.onChange;
-    const valid = !result || currentMoment.isValid(); 
-    valid && onChange && onChange({
-      name: this.props.name,
-      value: result,
-      strValue: !result? undefined :
-        !this.props.showTime ? new moment(result).format('YYYY-MM-DD') :
-          new moment(result).format('YYYY-MM-DDTHH:mm')
-    });
-
+    const valid = !result || currentMoment.isValid();
+    valid &&
+      onChange &&
+      onChange({
+        name: this.props.name,
+        value: result,
+        strValue: !result
+          ? undefined
+          : !this.props.showTime
+          ? new moment(result).format("YYYY-MM-DD")
+          : new moment(result).format("YYYY-MM-DDTHH:mm")
+      });
   }
 
   onInputFocus() {
@@ -90,11 +100,13 @@ class DateTimeInput extends React.Component {
   onInputBlur(event) {
     const newElement = event.relatedTarget;
     if (newElement) {
-      const isOpen = !!(newElement && newElement.closest(`#dt-${this.state.id}`));
+      const isOpen = !!(
+        newElement && newElement.closest(`#dt-${this.state.id}`)
+      );
       this.setState({
         focused: false,
         isOpen: isOpen
-      })
+      });
     }
     this.triggerChange();
   }
@@ -102,16 +114,19 @@ class DateTimeInput extends React.Component {
   // a date has been chosen in the calendar
   onCalendarChange(dateMoment) {
     const { format } = this.props.i18n;
-    this.setState({
-      dateValue: dateMoment.format(format),
-      isOpen: false
-    }, () => {
-      //this.triggerChange();
-      setTimeout(() => {
-        this.refs.dateInput.focus()
-        this.setState({ isOpen: false });
-      }, 0)
-    });
+    this.setState(
+      {
+        dateValue: dateMoment.format(format),
+        isOpen: false
+      },
+      () => {
+        //this.triggerChange();
+        setTimeout(() => {
+          this.refs.dateInput.focus();
+          this.setState({ isOpen: false });
+        }, 0);
+      }
+    );
   }
 
   onInputClick() {
@@ -123,7 +138,7 @@ class DateTimeInput extends React.Component {
   }
 
   onKeyDown(e) {
-    var handled = false
+    var handled = false;
     if (e.keyCode == 27) {
       this.onClose();
     } else {
@@ -132,9 +147,9 @@ class DateTimeInput extends React.Component {
   }
 
   render() {
-    const { value, i18n, isValid, locale, required, showTime, name, disabled } = this.props;
+    const { i18n, isValid, required, showTime, name, disabled } = this.props;
     const { isOpen, dateValue, timeValue, id } = this.state;
-    
+
     return (
       <div className="dt-input-container" id={`dt-${id}`}>
         <div className="dt-inputs">
@@ -149,17 +164,15 @@ class DateTimeInput extends React.Component {
               name={name}
               disabled={disabled}
               ref="dateInput"
-
-              onKeyDown={!disabled? this.onKeyDown : undefined}
-              onClick={!disabled? this.onInputClick : undefined}
-              onFocus={!disabled? this.onInputFocus : undefined}
-              onBlur={!disabled? this.onInputBlur : undefined}
-              onChange={!disabled? this.onDateChange : undefined}
-
+              onKeyDown={!disabled ? this.onKeyDown : undefined}
+              onClick={!disabled ? this.onInputClick : undefined}
+              onFocus={!disabled ? this.onInputFocus : undefined}
+              onBlur={!disabled ? this.onInputBlur : undefined}
+              onChange={!disabled ? this.onDateChange : undefined}
             />
           </div>
 
-          { showTime && 
+          {showTime && (
             <input
               type="text"
               className="dt-input dt-input-time"
@@ -168,34 +181,27 @@ class DateTimeInput extends React.Component {
               required={required}
               disabled={disabled}
               placeholder="hh:mm"
-
-              onBlur={!disabled? this.onInputBlur : undefined}
-              onChange={!disabled? this.onTimeChange : undefined}
-
-            />  
-          }
+              onBlur={!disabled ? this.onInputBlur : undefined}
+              onChange={!disabled ? this.onTimeChange : undefined}
+            />
+          )}
         </div>
 
-        { isOpen && 
+        {isOpen && (
           <div aria-hidden="true">
-            <div 
-              className="dt-dialog-backdrop" 
-              onClick={this.onClose}>
-            </div>
+            <div className="dt-dialog-backdrop" onClick={this.onClose} />
             <dialog className="dt-dialog" open>
               <Calendar
                 dateValue={dateValue}
                 i18n={i18n}
                 isValid={isValid}
-
                 onChange={this.onCalendarChange}
               />
               <div className="dt-actions">
-                <button 
-                  type="button" 
-                  className="dt-btn dt-close" 
+                <button
+                  type="button"
+                  className="dt-btn dt-close"
                   tabIndex="-1"
-
                   onClick={this.onClose}
                 >
                   {i18n.Close}
@@ -203,30 +209,28 @@ class DateTimeInput extends React.Component {
               </div>
             </dialog>
           </div>
-        }
+        )}
       </div>
     );
   }
-
-};
+}
 
 DateTimeInput.defaultProps = {
-  
   // the i18n entries to use
   i18n: {
-    Date: 'Date',
-    Time: 'Time',
-    Close: 'Close',
-    Hours: 'Hours',
-    Minutes: 'Minutes',
+    Date: "Date",
+    Time: "Time",
+    Close: "Close",
+    Hours: "Hours",
+    Minutes: "Minutes",
 
     // date format
-    format: 'YYYY-MM-DD',
+    format: "YYYY-MM-DD",
 
     // locale ISO
-    locale: 'en'
+    locale: "en"
   },
-  
+
   // true to include a time component
   showTime: true,
 
@@ -234,11 +238,10 @@ DateTimeInput.defaultProps = {
   // value: undefined,
 
   // a function that given a date returns if it's valid
-  isValid: (moment) => true,
+  isValid: moment => true,
 
   // triggered when there is a change. Receives a Date instance
   onChange: undefined
-
-}
+};
 
 export default DateTimeInput;
