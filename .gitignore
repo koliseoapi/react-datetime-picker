@@ -1,6 +1,6 @@
 .nyc_output/
-coverage
-build
+coverage/*
+build/*
 node_modules
 .gh-pages
 example/bundle*

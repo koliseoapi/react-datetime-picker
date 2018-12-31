@@ -1,2 +1,8 @@
 .babelrc
 test/*
+coverage/*
+.travis.yml
+.vscode/*
+publish.sh
+.gh-pages/*
+build/*
