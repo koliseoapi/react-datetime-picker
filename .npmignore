@@ -6,3 +6,5 @@ coverage/*
 publish.sh
 .gh-pages/*
 build/*
+webpack.*
+.nyc_output/*
