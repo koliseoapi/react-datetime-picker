@@ -139,12 +139,18 @@ class DateTimeInput extends React.Component {
 
   onKeyDown(e) {
     if (e.keyCode == 27) {
+      // if esc, hide the calendar
       this.onClose();
-    } else if (e.keyCode == 13 && this.state.isOpen) {
-      this.triggerChange();
-      this.setState({ isOpen: false });
-      e.preventDefault();
+    } else if (e.keyCode == 13) {
+      // if enter is pressed when the calendar is shown, just cancel the event and hide the calendar
+      // presing enter again will submit the form
+      if (this.state.isOpen) {
+        this.triggerChange();
+        this.setState({ isOpen: false });
+        e.preventDefault();
+      }
     } else {
+      // any other key, show the calendar
       this.state.isOpen || this.setState({ isOpen: true });
     }
   }
