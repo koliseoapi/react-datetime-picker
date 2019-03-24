@@ -138,9 +138,12 @@ class DateTimeInput extends React.Component {
   }
 
   onKeyDown(e) {
-    var handled = false;
     if (e.keyCode == 27) {
       this.onClose();
+    } else if (e.keyCode == 13 && this.state.isOpen) {
+      this.triggerChange();
+      this.setState({ isOpen: false });
+      e.preventDefault();
     } else {
       this.state.isOpen || this.setState({ isOpen: true });
     }
@@ -163,6 +166,7 @@ class DateTimeInput extends React.Component {
               pattern={dateFormatToPattern(i18n.format)}
               name={name}
               disabled={disabled}
+              autoComplete="off"
               ref="dateInput"
               onKeyDown={!disabled ? this.onKeyDown : undefined}
               onClick={!disabled ? this.onInputClick : undefined}
