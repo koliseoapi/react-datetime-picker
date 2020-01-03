@@ -4,3 +4,4 @@ build/*
 node_modules
 .gh-pages
 example/bundle*
+*.map

@@ -29,3 +29,7 @@ export function chunk(array, chunk) {
   }
   return result;
 }
+
+export function isDateValid(date) {
+  return typeof date === "undefined" || (date instanceof Date && !isNaN(date));
+}

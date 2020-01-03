@@ -77,8 +77,11 @@
 .dt-day-a,
 .dt-th {
   text-align: center;
-  cursor: pointer;
   color: $black;
+}
+
+.dt-day-a {
+  cursor: pointer;
 }
 
 .dt-th {

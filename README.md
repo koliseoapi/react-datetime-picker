@@ -1,14 +1,17 @@
-# react-moment-datetime 
+# react-datetime-picker
 
-[![Build Status](https://secure.travis-ci.org/koliseoapi/react-moment-datetime.svg?branch=master)](http://travis-ci.org/koliseoapi/react-moment-datetime)
-[![Coverage Status](https://img.shields.io/coveralls/koliseoapi/react-moment-datetime.svg?style=flat)](https://coveralls.io/r/koliseoapi/react-moment-datetime)
-<a href="https://www.npmjs.com/package/react-moment-datetime"><img alt="NPM Downloads" src="https://img.shields.io/npm/dm/react-moment-datetime.svg?maxAge=43200"></a>
+[![Build Status](https://secure.travis-ci.org/koliseoapi/react-datetime-picker.svg?branch=master)](http://travis-ci.org/koliseoapi/react-datetime-picker)
+[![Coverage Status](https://img.shields.io/coveralls/koliseoapi/react-datetime-picker.svg?style=flat)](https://coveralls.io/r/koliseoapi/react-datetime-picker)
 
-React datetime picker powered by [momentjs](http://momentjs.com). See the [demo here](http://koliseoapi.github.io/react-moment-datetime).
- 
+<!--
+<a href="https://www.npmjs.com/package/react-datetime-picker"><img alt="NPM Downloads" src="https://img.shields.io/npm/dm/react-datetime-picker.svg?maxAge=43200"></a>
+-->
+
+React datetime picker. See the [demo here](http://koliseoapi.github.io/react-datetime-picker).
+
 ### Usage
 
-``` javascript
+```javascript
 <DateTimeInput
   value={this.state.date}
   onChange={this.onChange}
@@ -18,41 +21,47 @@ React datetime picker powered by [momentjs](http://momentjs.com). See the [demo 
 
 Available properties:
 
-| Property | Type | Content  | Default Value |
-| --- | --- | --- | --- |
-| i18n | `JSON` | Entries to render i18n content | See below for an example
-| showTime | `boolean` | True to display a separate input field for the time | `true`
-| value | `Date` | The current value | `undefined`
-| isValid | `function` | A function that receives a date and returns true if the date is valid input. Can be used to set a maximum or minimum value in the calendar | `(moment) => true`
-| onChange | `function` | A function that will receive the value when the user introduces a valid date. Receives a JSON of `name`, `value` and `strValue` | `undefined`
+| Property | Type       | Content                                                                                                                                    | Default Value            |
+| -------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
+| i18n     | `JSON`     | Entries to render i18n content                                                                                                             | See below for an example |
+| showTime | `boolean`  | True to display a separate input field for the time                                                                                        | `true`                   |
+| value    | `Date`     | The current value                                                                                                                          | `undefined`              |
+| isValid  | `function` | A function that receives a date and returns true if the date is valid input. Can be used to set a maximum or minimum value in the calendar | `(date) => true`         |
+| onChange | `function` | A function that will receive the value when the user introduces a valid date. Receives a JSON with `name`, `value` and `strValue`.         | `undefined`              |
 
-The default value of `i18n`:
+The default value of `i18n` is:
 
 ```js
 {
-  Date: 'Date',
-  Time: 'Time',
   Close: 'Close',
-  Hours: 'Hours',
-  Minutes: 'Minutes',
+  format: 'yyyy-MM-dd',
 
-  // date format
-  format: 'YYYY-MM-DD',
-
-  // locale ISO
-  locale: 'en'
+  // Monday-indexed weekdays
+  weekDays: 'MonTueWedThuFriSatSun'
 }
 ```
 
-Check [app.js](https://github.com/koliseoapi/react-moment-datetime/blob/master/example/app.js) for a working example.
+Any other attributes will be forwarded to the date input field:
+
+```javascript
+<label htmlFor="startDate">Start Date</label>
+<DateTimeInput
+  id="startDate"
+  placeholder="dd/mm/yyyy"
+  aria-label="Please introduce a start date"
+/>
+```
+
+Check [app.js](https://github.com/koliseoapi/react-datetime-picker/blob/master/example/app.js) for a working example.
+
+**NOTICE** The removal of the dependency with Moment.js introduced breaking changes. The current format requires former `DD` and `YYYY` to be lowercase. `isValid()` also receives an instance of `Date` instead of `Moment`
 
 ### Development
 
 Work on the code:
 
 ```sh
-npm install
-npm run build
+npm i
 npm run watch
 xdg-open http://localhost:8080/example/
 ```
@@ -67,4 +76,4 @@ Work on the demo:
 
 Licensed under the MIT license
 
-`react-moment-datetime` is based on the great job by Wang Zuo, the author of [input-moment](https://github.com/wangzuo/input-moment)
+`react-datetime-picker` is based on [input-moment](https://github.com/wangzuo/input-moment) by Wang Zuo.

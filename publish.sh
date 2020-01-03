@@ -2,7 +2,7 @@
 # Updates the example page at koliseoapi.github.io
 set -e
 
-NODE_ENV=prod node node_modules/webpack/bin/webpack.js --progress --colors --config webpack.config.js --display-error-details --display-modules 
+npm run build
 FOLDER=.gh-pages
 
 if [ ! -d ${FOLDER} ]; then

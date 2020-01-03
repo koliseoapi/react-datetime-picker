@@ -1,7 +1,7 @@
 import React from "react";
 import Calendar from "./Calendar";
-import moment from "moment";
-import { bindAll, dateFormatToPattern } from "./util";
+import { bindAll, dateFormatToPattern, isDateValid } from "./util";
+import { format, setHours, setMinutes, parse } from "date-fns/esm";
 
 let COUNTER = 0;
 
@@ -23,10 +23,6 @@ class DateTimeInput extends React.Component {
     ]);
   }
 
-  componentWillReceiveProps({ value }) {
-    this.setState(this.dateToValues(value));
-  }
-
   onDateChange(e) {
     this.setState({
       dateValue: e.target.value
@@ -42,41 +38,44 @@ class DateTimeInput extends React.Component {
   // translate a date to the corresponding input values
   dateToValues(date) {
     const {
-      i18n: { format, locale }
+      i18n: { format: dateFormat }
     } = this.props;
-    if (!date) {
-      return {
-        dateValue: "",
-        timeValue: ""
-      };
-    }
-    const currentMoment = moment(date).locale(locale);
-    return {
-      dateValue: currentMoment.format(format),
-      timeValue: currentMoment.format("HH:mm")
-    };
+    return !date
+      ? {
+          dateValue: "",
+          timeValue: ""
+        }
+      : {
+          dateValue: format(date, dateFormat),
+          timeValue: format(date, "HH:mm")
+        };
   }
 
   triggerChange() {
-    const { format, locale } = this.props.i18n;
+    const { isValid } = this.props;
+    const { format: dateFormat } = this.props.i18n;
     const { dateValue, timeValue } = this.state;
     let result = undefined;
 
     if (dateValue) {
-      var currentMoment = moment(dateValue, format).locale(locale);
-      const timeParts = /([0-2]?[0-9]):([0-5]?[0-9])/.exec(timeValue);
-      if (timeParts) {
-        const [_, hour, minutes] = timeParts;
-        currentMoment.hour(hour);
-        currentMoment.minutes(minutes);
+      try {
+        result = parse(dateValue, dateFormat, new Date());
+        const timeParts = /([0-2]?[0-9]):([0-5]?[0-9])/.exec(timeValue);
+        if (timeParts) {
+          const [_, hour, minutes] = timeParts;
+          result = setHours(result, +hour);
+          result = setMinutes(result, +minutes);
+        }
+      } catch (e) {
+        console.log(e.message);
+        result = NaN;
       }
-      result = currentMoment.toDate();
     }
 
     // notify of date change
     const onChange = this.props.onChange;
-    const valid = !result || currentMoment.isValid();
-    valid &&
+    isDateValid(result) &&
+      (!isValid || isValid(result)) &&
       onChange &&
       onChange({
         name: this.props.name,
@@ -84,8 +83,8 @@ class DateTimeInput extends React.Component {
         strValue: !result
           ? undefined
           : !this.props.showTime
-          ? new moment(result).format("YYYY-MM-DD")
-          : new moment(result).format("YYYY-MM-DDTHH:mm")
+          ? format(result, "yyyy-MM-dd")
+          : format(result, "yyyy-MM-dd'T'HH:mm")
       });
   }
 
@@ -112,15 +111,14 @@ class DateTimeInput extends React.Component {
   }
 
   // a date has been chosen in the calendar
-  onCalendarChange(dateMoment) {
-    const { format } = this.props.i18n;
+  onCalendarChange(date) {
+    const { format: dateFormat } = this.props.i18n;
     this.setState(
       {
-        dateValue: dateMoment.format(format),
+        dateValue: format(date, dateFormat),
         isOpen: false
       },
       () => {
-        //this.triggerChange();
         setTimeout(() => {
           this.refs.dateInput.focus();
           this.setState({ isOpen: false });
@@ -156,7 +154,18 @@ class DateTimeInput extends React.Component {
   }
 
   render() {
-    const { i18n, isValid, required, showTime, name, disabled } = this.props;
+    const {
+      i18n,
+      isValid,
+      showTime,
+      required,
+      name,
+      disabled,
+      placeholder,
+      onChange,
+      value,
+      ...otherProps
+    } = this.props;
     const { isOpen, dateValue, timeValue, id } = this.state;
 
     return (
@@ -168,7 +177,7 @@ class DateTimeInput extends React.Component {
               className="dt-input dt-input-date"
               value={dateValue}
               required={required}
-              placeholder={i18n.format}
+              placeholder={placeholder || i18n.format.toLowerCase()}
               pattern={dateFormatToPattern(i18n.format)}
               name={name}
               disabled={disabled}
@@ -179,6 +188,7 @@ class DateTimeInput extends React.Component {
               onFocus={!disabled ? this.onInputFocus : undefined}
               onBlur={!disabled ? this.onInputBlur : undefined}
               onChange={!disabled ? this.onDateChange : undefined}
+              {...otherProps}
             />
           </div>
 
@@ -228,17 +238,11 @@ class DateTimeInput extends React.Component {
 DateTimeInput.defaultProps = {
   // the i18n entries to use
   i18n: {
-    Date: "Date",
-    Time: "Time",
     Close: "Close",
-    Hours: "Hours",
-    Minutes: "Minutes",
 
     // date format
-    format: "YYYY-MM-DD",
-
-    // locale ISO
-    locale: "en"
+    format: "yyyy-MM-dd",
+    weekDays: "MonTueWedThuFriSatSun"
   },
 
   // true to include a time component
@@ -248,7 +252,7 @@ DateTimeInput.defaultProps = {
   // value: undefined,
 
   // a function that given a date returns if it's valid
-  isValid: moment => true,
+  isValid: date => true,
 
   // triggered when there is a change. Receives a Date instance
   onChange: undefined

@@ -1,64 +1,60 @@
 {
-  "name": "react-moment-datetime",
-  "version": "0.5.1",
-  "description": "React datetime picker powered by momentjs",
+  "name": "@koliseoapi/react-datetime-picker",
+  "version": "0.0.1",
+  "description": "React datetime picker",
   "main": "index.js",
-  "author": "Carlos Coloma <ccescribano@gmail.com>",
+  "authors": [
+    "Carlos Coloma <ccescribano@gmail.com>",
+    "Nacho Coloma <icoloma@gmail.com>"
+  ],
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.0.0",
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
+    "@babel/register": "^7.7.7",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-loader": "^8.0.0-beta.0",
-    "babel-plugin-istanbul": "^5.1.1",
-    "coveralls": "^3.0.3",
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.11.2",
-    "jsdom": "^14.0.0",
-    "jsdom-global": "^3.0.2",
-    "json-loader": "^0.5.7",
-    "mocha": "^6.0.2",
-    "node-sass": "^4.11.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-istanbul": "^6.0.0",
+    "coveralls": "^3.0.9",
+    "jest": "^24.9.0",
+    "jsdom": "^15.2.1",
     "npm-run-all": "^4.1.5",
-    "nyc": "^13.3.0",
-    "onchange": "^5.2.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "sinon": "^7.2.7",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.2.1",
-    "webpack-notifier": "^1.7.0"
+    "nyc": "^15.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-test-renderer": "^16.12.0",
+    "sass": "^1.24.1",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1",
+    "webpack-notifier": "^1.8.0"
   },
   "dependencies": {
-    "moment": "^2.24.0"
+    "date-fns": "^2.8.1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/koliseoapi/react-moment-datetime.git"
+    "url": "git+https://github.com/koliseoapi/react-datetime-picker.git"
   },
   "keywords": [
     "react",
-    "react-component",
     "input",
     "datetime",
-    "picker",
-    "moment"
+    "picker"
   ],
   "bugs": {
-    "url": "https://github.com/koliseoapi/react-moment-datetime/issues"
+    "url": "https://github.com/koliseoapi/react-datetime-picker/issues"
   },
-  "homepage": "https://github.com/koliseoapi/react-moment-datetime#readme",
+  "homepage": "https://github.com/koliseoapi/react-datetime-picker#readme",
   "scripts": {
-    "watch": "npm-run-all --parallel watch:**",
-    "build": "node-sass --output-style compressed -o example/css src/scss/datetime.scss",
-    "watch:css": "onchange 'src/scss/*.scss' -- npm run build",
+    "build": "NODE_ENV=prod node node_modules/webpack/bin/webpack.js --progress --colors --config webpack.config.js --display-error-details --display-modules && sass --style compressed src/scss/datetime.scss example/css/datetime.css",
+    "watch:css": "sass --watch src/scss/datetime.scss example/css/datetime.css",
     "watch:js": "webpack-dev-server --inline --hot --progress --colors",
-    "test": "./node_modules/.bin/_mocha --require .vscode/registerBabel.js test/*Test.js",
+    "watch": "npm-run-all --parallel watch:**",
+    "test": "jest",
     "postversion": "git push && git push --tags",
-    "coverage": "NODE_ENV=test node_modules/.bin/nyc --reporter=lcov --reporter=text node_modules/.bin/_mocha --require .vscode/registerBabel.js test/*Test.js"
+    "coverage": "NODE_ENV=test nyc --reporter=lcov --reporter=text jest"
   }
 }

@@ -48,6 +48,7 @@ $input-date-width: 8.5rem;
 .dt-input-date {
   width: $input-date-width;
   padding-right: 2rem;
+  cursor: pointer;
 }
 
 // put the calendar icon in place

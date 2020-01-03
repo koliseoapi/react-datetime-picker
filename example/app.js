@@ -1,27 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import DateTimeInput from "../index";
-import moment from "moment";
 import { bindAll } from "../src/util";
+import { isBefore, format, isAfter } from "date-fns/esm";
 
 var enValues = {
-  Date: "Date",
-  Time: "Time",
   Close: "Close",
-  Hours: "Hours",
-  Minutes: "Minutes",
-  format: "MM-DD-YYYY",
-  locale: "en"
+  format: "MM-dd-yyyy",
+  weekDays: "MonTueWedThuFriSatSun"
 };
 
 var esValues = {
-  Date: "Fecha",
-  Time: "Hora",
   Close: "Cerrar",
-  Hours: "Horas",
-  Minutes: "Minutos",
-  format: "DD-MM-YYYY",
-  locale: "es"
+  format: "dd-MM-yyyy",
+  weekDays: "LunMarMieJueVieSabDom"
 };
 
 class App extends React.Component {
@@ -37,19 +29,20 @@ class App extends React.Component {
     const { from, until } = this.state;
     return (
       <div className="app">
-        <h1>react-moment-datetime</h1>
-        <p>React datetime picker powered by momentjs</p>
+        <h1>react-datetime-picker</h1>
+        <p>React datetime picker</p>
         <form>
           <label htmlFor="from" className="dt-input-label">
             Date from (US English, date+time, required)
           </label>
           <DateTimeInput
             name="from"
+            id="from"
             value={from}
             i18n={enValues}
             onChange={this.onChange}
-            isValid={moment => {
-              return !until || moment.isBefore(until);
+            isValid={date => {
+              return !until || isBefore(date, until);
             }}
             required={true}
           />
@@ -59,11 +52,12 @@ class App extends React.Component {
           </label>
           <DateTimeInput
             name="until"
+            id="until"
             value={until}
             i18n={esValues}
             onChange={this.onChange}
-            isValid={moment => {
-              return !from || moment.isAfter(from);
+            isValid={date => {
+              return !from || isAfter(date, from);
             }}
             showTime={false}
           />
@@ -76,7 +70,7 @@ class App extends React.Component {
     const formattedValue =
       typeof value === "undefined"
         ? "undefined"
-        : new moment(value).format("YYYY-MM-DD HH:mm");
+        : format(value, "yyyy-MM-dd HH:mm");
     console.log(`New value for ${name}: ${formattedValue}`);
     const state = {};
     state[name] = value;
