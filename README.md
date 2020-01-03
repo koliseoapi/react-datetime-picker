@@ -68,6 +68,3 @@ Work on the demo:
 Licensed under the MIT license
 
 `react-moment-datetime` is based on the great job by Wang Zuo, the author of [input-moment](https://github.com/wangzuo/input-moment)
-
-Design inspired in https://dribbble.com/shots/1439965-Due-Date-and-Time-Picker.
-
