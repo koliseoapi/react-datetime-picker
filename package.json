@@ -52,7 +52,7 @@
     "watch:css": "sass --watch src/scss/datetime.scss example/css/datetime.css",
     "watch:js": "webpack-dev-server --inline --hot --progress --colors",
     "watch": "npm-run-all --parallel watch:**",
-    "test": "jest",
+    "test": "TZ=UTC jest",
     "postversion": "git push && git push --tags",
     "coverage": "NODE_ENV=test nyc --reporter=lcov --reporter=text jest"
   }
