@@ -1,11 +1,8 @@
 # react-datetime-picker
 
 [![Build Status](https://secure.travis-ci.org/koliseoapi/react-datetime-picker.svg?branch=master)](http://travis-ci.org/koliseoapi/react-datetime-picker)
-[![Coverage Status](https://img.shields.io/coveralls/koliseoapi/react-datetime-picker.svg?style=flat)](https://coveralls.io/r/koliseoapi/react-datetime-picker)
-
-<!--
-<a href="https://www.npmjs.com/package/react-datetime-picker"><img alt="NPM Downloads" src="https://img.shields.io/npm/dm/react-datetime-picker.svg?maxAge=43200"></a>
--->
+[![Coverage Status](https://coveralls.io/repos/github/koliseoapi/react-moment-datetime/badge.svg?branch=master)](https://coveralls.io/github/koliseoapi/react-moment-datetime?branch=master)
+<a href="https://www.npmjs.com/package/@koliseoapi/react-datetime-picker"><img alt="NPM Downloads" src="https://img.shields.io/npm/dm/@koliseoapi/react-datetime-picker.svg?maxAge=43200"></a>
 
 React datetime picker, based on date-fns. See the [demo here](http://koliseoapi.github.io/react-datetime-picker).
 
