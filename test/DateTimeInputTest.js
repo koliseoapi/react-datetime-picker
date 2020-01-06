@@ -4,7 +4,7 @@ import DateTimeInput from "../src/DateTimeInput";
 import { parseISO, setDate } from "date-fns/esm";
 
 describe("DateTimeInput", function() {
-  const date = parseISO("2014-10-25T10:20Z");
+  const date = parseISO("2014-10-25T10:20");
 
   it("should render with empty date", function() {
     renderer.create(<DateTimeInput />);
@@ -44,7 +44,7 @@ describe("DateTimeInput", function() {
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenCalledWith({
       name: "foobar",
-      strValue: "2014-10-05T12:20",
+      strValue: "2014-10-05T10:20",
       value: setDate(date, 5)
     });
 
