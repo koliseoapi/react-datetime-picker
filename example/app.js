@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import DateTimeInput from "../index";
 import { bindAll } from "../src/util";
-import { isBefore, format, isAfter } from "date-fns/esm";
+import { format, isAfter } from "date-fns/esm";
 import { es } from "date-fns/esm/locale";
 
 class App extends React.Component {
