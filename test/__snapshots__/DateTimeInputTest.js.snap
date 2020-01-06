@@ -20,7 +20,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
         onFocus={[Function]}
         onKeyDown={[Function]}
         pattern="[0-9]{4}-[01]?[0-9]-[0-3]?[0-9]"
-        placeholder="yyyy-MM-dd"
+        placeholder="yyyy-mm-dd"
         type="text"
         value="2014-10-25"
       />
@@ -47,6 +47,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
       open={true}
     >
       <div
+        aria-hidden="true"
         className="dt-calendar"
       >
         <div
@@ -118,7 +119,8 @@ exports[`DateTimeInput should render a calendar 1`] = `
                 className="dt-day"
               >
                 <a
-                  className="dt-day-a dt-prev-month"
+                  className="dt-day-a dt-other-month"
+                  data-date="2014-09-27T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -129,7 +131,8 @@ exports[`DateTimeInput should render a calendar 1`] = `
                 className="dt-day"
               >
                 <a
-                  className="dt-day-a dt-prev-month"
+                  className="dt-day-a dt-other-month"
+                  data-date="2014-09-28T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -140,7 +143,8 @@ exports[`DateTimeInput should render a calendar 1`] = `
                 className="dt-day"
               >
                 <a
-                  className="dt-day-a dt-prev-month"
+                  className="dt-day-a dt-other-month"
+                  data-date="2014-09-29T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -152,6 +156,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-09-30T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -163,6 +168,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-01T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -174,6 +180,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-02T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -185,6 +192,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-03T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -198,6 +206,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-04T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -209,6 +218,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-05T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -220,6 +230,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-06T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -231,6 +242,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-07T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -242,6 +254,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-08T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -253,6 +266,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-09T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -264,6 +278,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-10T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -277,6 +292,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-11T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -288,6 +304,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-12T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -299,6 +316,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-13T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -310,6 +328,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-14T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -321,6 +340,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-15T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -332,6 +352,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-16T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -343,6 +364,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-17T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -356,6 +378,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-18T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -367,6 +390,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-19T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -378,6 +402,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-20T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -389,6 +414,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-21T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -400,6 +426,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-22T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -411,6 +438,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-23T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -422,6 +450,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a dt-current-day"
+                  data-date="2014-10-24T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -435,6 +464,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-25T22:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -446,6 +476,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-26T23:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -457,6 +488,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-27T23:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -468,6 +500,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-28T23:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -479,6 +512,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-29T23:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -490,6 +524,7 @@ exports[`DateTimeInput should render a calendar 1`] = `
               >
                 <a
                   className="dt-day-a"
+                  data-date="2014-10-30T23:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
@@ -500,90 +535,12 @@ exports[`DateTimeInput should render a calendar 1`] = `
                 className="dt-day"
               >
                 <a
-                  className="dt-day-a dt-next-month"
+                  className="dt-day-a dt-other-month"
+                  data-date="2014-10-31T23:00:00.000Z"
                   onMouseDown={[Function]}
                   tabIndex="-1"
                 >
                   1
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td
-                className="dt-day"
-              >
-                <a
-                  className="dt-day-a dt-next-month"
-                  onMouseDown={[Function]}
-                  tabIndex="-1"
-                >
-                  2
-                </a>
-              </td>
-              <td
-                className="dt-day"
-              >
-                <a
-                  className="dt-day-a dt-next-month"
-                  onMouseDown={[Function]}
-                  tabIndex="-1"
-                >
-                  3
-                </a>
-              </td>
-              <td
-                className="dt-day"
-              >
-                <a
-                  className="dt-day-a dt-next-month"
-                  onMouseDown={[Function]}
-                  tabIndex="-1"
-                >
-                  4
-                </a>
-              </td>
-              <td
-                className="dt-day"
-              >
-                <a
-                  className="dt-day-a dt-next-month"
-                  onMouseDown={[Function]}
-                  tabIndex="-1"
-                >
-                  5
-                </a>
-              </td>
-              <td
-                className="dt-day"
-              >
-                <a
-                  className="dt-day-a dt-next-month"
-                  onMouseDown={[Function]}
-                  tabIndex="-1"
-                >
-                  6
-                </a>
-              </td>
-              <td
-                className="dt-day"
-              >
-                <a
-                  className="dt-day-a dt-next-month"
-                  onMouseDown={[Function]}
-                  tabIndex="-1"
-                >
-                  7
-                </a>
-              </td>
-              <td
-                className="dt-day"
-              >
-                <a
-                  className="dt-day-a dt-next-month"
-                  onMouseDown={[Function]}
-                  tabIndex="-1"
-                >
-                  8
                 </a>
               </td>
             </tr>
@@ -623,7 +580,7 @@ exports[`DateTimeInput should render disabled inputs 1`] = `
         className="dt-input dt-input-date"
         disabled={true}
         pattern="[0-9]{4}-[01]?[0-9]-[0-3]?[0-9]"
-        placeholder="yyyy-MM-dd"
+        placeholder="yyyy-mm-dd"
         type="text"
         value="2014-10-25"
       />
@@ -660,7 +617,7 @@ exports[`DateTimeInput should render with non-empty date 1`] = `
         onFocus={[Function]}
         onKeyDown={[Function]}
         pattern="[0-9]{4}-[01]?[0-9]-[0-3]?[0-9]"
-        placeholder="yyyy-MM-dd"
+        placeholder="yyyy-mm-dd"
         type="text"
         value="2014-10-25"
       />

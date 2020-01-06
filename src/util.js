@@ -12,12 +12,6 @@ export function dateFormatToPattern(dateFormat) {
     .replace(/dd/i, "[0-3]?[0-9]");
 }
 
-// equivalent to lodash.range()
-// https://www.reindex.io/blog/you-might-not-need-underscore/
-export function range(start, end) {
-  return Array.from(Array(end - start), (_, i) => start + i);
-}
-
 // replace lodash.chunk()
 // https://stackoverflow.com/questions/8495687/split-array-into-chunks
 export function chunk(array, chunk) {
@@ -32,4 +26,11 @@ export function chunk(array, chunk) {
 
 export function isDateValid(date) {
   return typeof date === "undefined" || (date instanceof Date && !isNaN(date));
+}
+
+export function capitalize(str) {
+  if (!str) {
+    return str;
+  }
+  return str.substring(0, 1).toUpperCase() + str.substring(1);
 }

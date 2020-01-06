@@ -1,4 +1,4 @@
-import { dateFormatToPattern } from "../src/util";
+import { dateFormatToPattern, capitalize, isDateValid } from "../src/util";
 
 describe("utils", function() {
   it("should translate date format to pattern", function() {
@@ -9,5 +9,21 @@ describe("utils", function() {
     expect(regexp.test("2014-1-1")).toBe(true);
     expect(regexp.test("2014-12-31")).toBe(true);
     expect(regexp.test("2014-09-09")).toBe(true);
+  });
+
+  it("should translate date format to pattern", function() {
+    expect(capitalize(undefined)).toBe(undefined);
+    expect(capitalize("")).toBe("");
+
+    expect(capitalize("a")).toBe("A");
+    expect(capitalize("ab")).toBe("Ab");
+    expect(capitalize("abc")).toBe("Abc");
+  });
+
+  it("Should confirm if a date is valid", () => {
+    expect(isDateValid(undefined)).toBe(true);
+    expect(isDateValid(new Date())).toBe(true);
+    expect(isDateValid(new Date("xxx"))).toBe(false);
+    expect(isDateValid(NaN)).toBe(false);
   });
 });

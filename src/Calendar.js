@@ -1,5 +1,5 @@
 import React from "react";
-import { bindAll, range, chunk, isDateValid } from "./util";
+import { bindAll, chunk, isDateValid, capitalize } from "./util";
 import {
   subMonths,
   addMonths,
@@ -8,48 +8,75 @@ import {
   setDate,
   parse,
   getDay,
-  format
+  format,
+  getDaysInMonth
 } from "date-fns/esm";
 
-function isPrevMonth(day, weekIndex) {
-  return weekIndex === 0 && day > 6;
-}
-
-function isNextMonth(day, weekIndex) {
-  return weekIndex >= 4 && day <= 14;
-}
-
-/**
- * currentDate: the currently selected Date in the calendar
- * day: the day of the month (1-31)
- * weekIndex: the current week being rendered in the calendar
- */
-function createCalendarDate(currentDate, day, weekIndex) {
-  let newDate = setDate(currentDate, +day);
-  if (isPrevMonth(day, weekIndex)) {
-    newDate = subMonths(newDate, 1);
-  } else if (isNextMonth(day, weekIndex)) {
-    newDate = addMonths(newDate, 1);
-  }
-  return newDate;
+// return a range of days, where each value is start+index+1
+function dateRange(start, end) {
+  return Array.from(Array(end - start), (_, i) => start + i + 1);
 }
 
 function Day(allProps) {
-  const { day, weekIndex, isValid, selected, ...props } = allProps;
+  const {
+    day,
+    date,
+    isValid,
+    selected,
+    belongsTothisMonth,
+    onChange,
+    ...props
+  } = allProps;
 
-  const classes = ["dt-day-a"];
-  isPrevMonth(day, weekIndex) && classes.push("dt-prev-month");
-  isNextMonth(day, weekIndex) && classes.push("dt-next-month");
-  !isValid && classes.push("dt-invalid");
-  selected && classes.push("dt-current-day");
+  const classes = [
+    "dt-day-a",
+    belongsTothisMonth ? "" : "dt-other-month",
+    isValid ? "" : "dt-invalid",
+    !selected ? "" : "dt-current-day"
+  ]
+    .filter(_ => !!_)
+    .join(" ");
 
+  const onMouseDown = isValid ? () => onChange(date) : undefined;
+
+  // we don't use data-date, but it's useful for testing purposes
   return (
     <td className="dt-day">
-      <a className={classes.join(" ")} tabIndex="-1" {...props}>
+      <a
+        className={classes}
+        tabIndex="-1"
+        data-date={date.toISOString()}
+        onMouseDown={onMouseDown}
+        {...props}
+      >
         {day}
       </a>
     </td>
   );
+}
+
+// calculate the day numbers for the calendar, returned as three arrays:
+// last month, current month, next month.
+// the first and last arrays may be empty for certain months. See CalendarTest for examples.
+export function getCalendarFragments(date) {
+  const prevMonthLastDay = getDate(lastDayOfMonth(subMonths(date, 1)));
+  const currentMonthFirstWeekDay = getDay(setDate(date, 1));
+  const daysInMonth = getDaysInMonth(date);
+  const totalCalendarDays =
+    Math.ceil((daysInMonth + currentMonthFirstWeekDay) / 7) * 7;
+  const lastMonthDateRange = dateRange(
+    prevMonthLastDay - currentMonthFirstWeekDay,
+    prevMonthLastDay
+  );
+
+  return {
+    lastMonth: lastMonthDateRange,
+    currentMonth: dateRange(0, daysInMonth),
+    nextMonth: dateRange(
+      0,
+      totalCalendarDays - daysInMonth - lastMonthDateRange.length
+    )
+  };
 }
 
 //
@@ -59,10 +86,10 @@ class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.stateFromProps(props);
-    bindAll(this, ["selectDate", "nextMonth", "prevMonth"]);
+    bindAll(this, ["nextMonth", "prevMonth"]);
   }
 
-  stateFromProps({ dateValue, i18n: { format } }) {
+  stateFromProps({ dateValue, format }) {
     try {
       var currentMoment = parse(dateValue, format, new Date());
 
@@ -77,17 +104,6 @@ class Calendar extends React.Component {
     return {
       moment: currentMoment
     };
-  }
-
-  selectDate(day, weekIndex) {
-    let newDate = createCalendarDate(this.state.moment, day, weekIndex);
-    if (isPrevMonth(day, weekIndex)) {
-      this.prevMonth();
-    } else if (isNextMonth(day, weekIndex)) {
-      this.nextMonth();
-    } else {
-      this.props.onChange(newDate);
-    }
   }
 
   prevMonth(e) {
@@ -107,30 +123,31 @@ class Calendar extends React.Component {
   render() {
     const moment = this.state.moment;
     //const currentDay = getDate(moment);
-    const {
-      dateValue,
-      i18n: { format: dateFormat, weekDays: weekDaysStr }
-    } = this.props;
+    const { onChange, dateValue, format: dateFormat, locale } = this.props;
 
-    const prevMonthLastDay = getDate(lastDayOfMonth(subMonths(moment, 1)));
-    const currentMonthFirstWeekDay = getDay(setDate(moment, 1));
-    const currentMonthLastDay = getDate(lastDayOfMonth(moment));
-
-    const days = [].concat(
-      range(
-        prevMonthLastDay - currentMonthFirstWeekDay + 1,
-        prevMonthLastDay + 1
-      ),
-      range(1, currentMonthLastDay + 1),
-      range(1, 42 - currentMonthLastDay - currentMonthFirstWeekDay + 1)
-    );
-    debugger;
+    const { lastMonth, currentMonth, nextMonth } = getCalendarFragments(moment);
+    const days = [].concat(lastMonth, currentMonth, nextMonth);
+    function belongsToLastMonth(dayIndex) {
+      return dayIndex < lastMonth.length;
+    }
+    function belongsToNextMonth(dayIndex) {
+      return dayIndex >= lastMonth.length + currentMonth.length;
+    }
+    function createCalendarDate(currentDate, dayIndex) {
+      const day = days[dayIndex];
+      let newDate = setDate(currentDate, 1);
+      if (belongsToLastMonth(dayIndex)) {
+        newDate = subMonths(newDate, 1);
+      } else if (belongsToNextMonth(dayIndex)) {
+        newDate = addMonths(newDate, 1);
+      }
+      return setDate(newDate, day);
+    }
 
     // short names of the week days
-    const weekDays = days.slice(0, 7).map(day => {
-      const date = createCalendarDate(this.state.moment, day, 0);
-      const weekDay = getDay(date);
-      return weekDaysStr.substring(weekDay * 3, (weekDay + 1) * 3);
+    const weekDays = days.slice(7, 14).map(day => {
+      const date = setDate(moment, day);
+      return format(date, "EE", { locale });
     });
 
     return (
@@ -142,7 +159,9 @@ class Calendar extends React.Component {
             onClick={this.prevMonth}
             tabIndex="-1"
           />
-          <span className="dt-current-date">{format(moment, "MMMM yyyy")}</span>
+          <span className="dt-current-date">
+            {capitalize(format(moment, "MMMM yyyy", { locale }))}
+          </span>
           <button
             type="button"
             className="dt-button dt-btn-next-month"
@@ -164,22 +183,23 @@ class Calendar extends React.Component {
           <tbody>
             {chunk(days, 7).map((row, weekIndex) => (
               <tr key={weekIndex}>
-                {row.map(day => {
-                  const newDate = createCalendarDate(moment, day, weekIndex);
+                {row.map((day, di) => {
+                  const dayIndex = weekIndex * 7 + di;
+                  const newDate = createCalendarDate(moment, dayIndex);
                   const isValid = this.props.isValid(newDate);
                   const selected = format(newDate, dateFormat) == dateValue;
                   return (
                     <Day
                       key={day}
                       day={day}
+                      date={newDate}
                       selected={selected}
-                      weekIndex={weekIndex}
                       isValid={isValid}
-                      onMouseDown={
-                        isValid
-                          ? this.selectDate.bind(null, day, weekIndex)
-                          : undefined
+                      belongsTothisMonth={
+                        !belongsToLastMonth(dayIndex) &&
+                        !belongsToNextMonth(dayIndex)
                       }
+                      onChange={onChange}
                     />
                   );
                 })}

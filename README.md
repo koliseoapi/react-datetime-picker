@@ -7,7 +7,7 @@
 <a href="https://www.npmjs.com/package/react-datetime-picker"><img alt="NPM Downloads" src="https://img.shields.io/npm/dm/react-datetime-picker.svg?maxAge=43200"></a>
 -->
 
-React datetime picker. See the [demo here](http://koliseoapi.github.io/react-datetime-picker).
+React datetime picker, based on date-fns. See the [demo here](http://koliseoapi.github.io/react-datetime-picker).
 
 ### Usage
 
@@ -19,27 +19,17 @@ React datetime picker. See the [demo here](http://koliseoapi.github.io/react-dat
 />
 ```
 
-Available properties:
+## Available properties:
 
-| Property | Type       | Content                                                                                                                                    | Default Value            |
-| -------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
-| i18n     | `JSON`     | Entries to render i18n content                                                                                                             | See below for an example |
-| showTime | `boolean`  | True to display a separate input field for the time                                                                                        | `true`                   |
-| value    | `Date`     | The current value                                                                                                                          | `undefined`              |
-| isValid  | `function` | A function that receives a date and returns true if the date is valid input. Can be used to set a maximum or minimum value in the calendar | `(date) => true`         |
-| onChange | `function` | A function that will receive the value when the user introduces a valid date. Receives a JSON with `name`, `value` and `strValue`.         | `undefined`              |
-
-The default value of `i18n` is:
-
-```js
-{
-  Close: 'Close',
-  format: 'yyyy-MM-dd',
-
-  // Monday-indexed weekdays
-  weekDays: 'MonTueWedThuFriSatSun'
-}
-```
+| Property | Type       | Content                                                                                                                     | Default Value      |
+| -------- | ---------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| format   | `String`   | The [date format](https://date-fns.org/v2.8.1/docs/parse) to use                                                            | "yyyy-MM-dd"       |
+| showTime | `boolean`  | True to display a separate input field for the time                                                                         | `true`             |
+| value    | `Date`     | The current value                                                                                                           | `undefined`        |
+| isValid  | `function` | A function that returns true if a date is considered valid. Can be used to set a maximum or minimum value in the calendar   | `(date) => true`   |
+| onChange | `function` | A function that will be invoked when the user introduces a valid date. Receives a JSON with `name`, `value` and `strValue`. | `undefined`        |
+| locale   | `Object`   | A [date-fns locale](https://date-fns.org/v2.8.1/docs/I18n) to language-specific date fields                                 | `en_US`            |
+| i18n     | `Object`   | Entries to render a language-specific UI                                                                                    | `{Close: 'Close'}` |
 
 Any other attributes will be forwarded to the date input field:
 
@@ -53,8 +43,6 @@ Any other attributes will be forwarded to the date input field:
 ```
 
 Check [app.js](https://github.com/koliseoapi/react-datetime-picker/blob/master/example/app.js) for a working example.
-
-**NOTICE** The removal of the dependency with Moment.js introduced breaking changes. The current format requires former `DD` and `YYYY` to be lowercase. `isValid()` also receives an instance of `Date` instead of `Moment`
 
 ### Development
 
@@ -72,7 +60,15 @@ Work on the demo:
 ./publish.sh
 ```
 
-### License and acknowledgements
+## Breaking changes
+
+A previous version of this library was based on [moment.js](https://momentjs.com/). We replaced this dependency with the more lightweight [date-fns](https://date-fns.org/), which introduced the following breaking changes in react-datetime-input version 1.0.0:
+
+- The current `format` requires `dd` and `yyyy` to be lowercase (previously: uppercase).
+- `isValid()` now receives an instance of `Date` (previously: instance of `Moment`)
+- The locale being passed is now a [date-fns locale](https://date-fns.org/v2.8.1/docs/I18n) (previously: using Moment locale).
+
+## License and acknowledgements
 
 Licensed under the MIT license
 

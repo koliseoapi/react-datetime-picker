@@ -112,8 +112,7 @@
   color: white !important;
 }
 
-.dt-prev-month,
-.dt-next-month,
+.dt-other-month,
 .dt-invalid {
   color: #999;
 }

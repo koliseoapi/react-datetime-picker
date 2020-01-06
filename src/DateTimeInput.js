@@ -37,9 +37,7 @@ class DateTimeInput extends React.Component {
 
   // translate a date to the corresponding input values
   dateToValues(date) {
-    const {
-      i18n: { format: dateFormat }
-    } = this.props;
+    const { format: dateFormat } = this.props;
     return !date
       ? {
           dateValue: "",
@@ -52,8 +50,7 @@ class DateTimeInput extends React.Component {
   }
 
   triggerChange() {
-    const { isValid } = this.props;
-    const { format: dateFormat } = this.props.i18n;
+    const { isValid, format: dateFormat } = this.props;
     const { dateValue, timeValue } = this.state;
     let result = undefined;
 
@@ -112,7 +109,7 @@ class DateTimeInput extends React.Component {
 
   // a date has been chosen in the calendar
   onCalendarChange(date) {
-    const { format: dateFormat } = this.props.i18n;
+    const { format: dateFormat } = this.props;
     this.setState(
       {
         dateValue: format(date, dateFormat),
@@ -156,6 +153,7 @@ class DateTimeInput extends React.Component {
   render() {
     const {
       i18n,
+      format,
       isValid,
       showTime,
       required,
@@ -164,6 +162,7 @@ class DateTimeInput extends React.Component {
       placeholder,
       onChange,
       value,
+      locale,
       ...otherProps
     } = this.props;
     const { isOpen, dateValue, timeValue, id } = this.state;
@@ -177,8 +176,8 @@ class DateTimeInput extends React.Component {
               className="dt-input dt-input-date"
               value={dateValue}
               required={required}
-              placeholder={placeholder || i18n.format.toLowerCase()}
-              pattern={dateFormatToPattern(i18n.format)}
+              placeholder={placeholder || format.toLowerCase()}
+              pattern={dateFormatToPattern(format)}
               name={name}
               disabled={disabled}
               autoComplete="off"
@@ -213,9 +212,10 @@ class DateTimeInput extends React.Component {
             <dialog className="dt-dialog" open>
               <Calendar
                 dateValue={dateValue}
-                i18n={i18n}
+                format={format}
                 isValid={isValid}
                 onChange={this.onCalendarChange}
+                locale={locale}
               />
               <div className="dt-actions">
                 <button
@@ -236,13 +236,12 @@ class DateTimeInput extends React.Component {
 }
 
 DateTimeInput.defaultProps = {
+  // Date format
+  format: "yyyy-MM-dd",
+
   // the i18n entries to use
   i18n: {
-    Close: "Close",
-
-    // date format
-    format: "yyyy-MM-dd",
-    weekDays: "MonTueWedThuFriSatSun"
+    Close: "Close"
   },
 
   // true to include a time component
