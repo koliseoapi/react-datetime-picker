@@ -6,7 +6,7 @@ npm run build
 FOLDER=.gh-pages
 
 if [ ! -d ${FOLDER} ]; then
-  git clone -b gh-pages git@github.com:koliseoapi/react-moment-datetime ${FOLDER}
+  git clone -b gh-pages git@github.com:koliseoapi/react-datetime-input ${FOLDER}
   cd ${FOLDER}
 else
   cd ${FOLDER}
