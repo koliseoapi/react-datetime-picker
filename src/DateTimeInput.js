@@ -118,8 +118,11 @@ class DateTimeInput extends React.Component {
         },
         () => {
           setTimeout(() => {
-            this.dateInputRef && this.dateInputRef.focus();
-            this.setState({ isOpen: false });
+            // if it was not unmounted since last render
+            if (this.dateInputRef) {
+              this.dateInputRef.focus();
+              this.setState({ isOpen: false });
+            }
           }, 0);
         }
       );
