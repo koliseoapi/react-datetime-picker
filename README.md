@@ -18,15 +18,15 @@ React datetime picker, based on date-fns. See the [demo here](http://koliseoapi.
 
 ## Available properties:
 
-| Property | Type       | Content                                                                                                                     | Default Value                                 |
-| -------- | ---------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| format   | `String`   | The [date format](https://date-fns.org/v2.8.1/docs/parse) to use                                                            | "yyyy-MM-dd"                                  |
-| showTime | `boolean`  | True to display a separate input field for the time                                                                         | `true`                                        |
-| value    | `Date`     | The current value                                                                                                           | `undefined`                                   |
-| isValid  | `function` | A function that returns true if a date is considered valid. Can be used to set a maximum or minimum value in the calendar   | `(date) => true`                              |
-| onChange | `function` | A function that will be invoked when the user introduces a valid date. Receives a JSON with `name`, `value` and `strValue`. | `undefined`                                   |
-| locale   | `Object`   | A [date-fns locale](https://date-fns.org/v2.8.1/docs/I18n) to language-specific date fields                                 | `import { en_US } from "date-fns/esm/locale"` |
-| i18n     | `Object`   | Entries to render a language-specific UI                                                                                    | `{Close: 'Close'}`                            |
+| Property   | Type       | Content                                                                                                                     | Default Value                                 |
+| ---------- | ---------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| dateFormat | `String`   | The [date format](https://date-fns.org/v2.8.1/docs/parse) to use                                                            | "yyyy-MM-dd"                                  |
+| showTime   | `boolean`  | True to display a separate input field for the time                                                                         | `true`                                        |
+| value      | `Date`     | The current value                                                                                                           | `undefined`                                   |
+| isValid    | `function` | A function that returns true if a date is considered valid. Can be used to set a maximum or minimum value in the calendar   | `(date) => true`                              |
+| onChange   | `function` | A function that will be invoked when the user introduces a valid date. Receives a JSON with `name`, `value` and `strValue`. | `undefined`                                   |
+| locale     | `Object`   | A [date-fns locale](https://date-fns.org/v2.8.1/docs/I18n) to language-specific date fields                                 | `import { en_US } from "date-fns/esm/locale"` |
+| i18n       | `Object`   | Entries to render a language-specific UI                                                                                    | `{Close: 'Close'}`                            |
 
 Any other attributes will be forwarded to the date input field:
 
@@ -61,7 +61,7 @@ Work on the demo:
 
 A previous version of this library was based on [moment.js](https://momentjs.com/). We replaced this dependency with the more lightweight [date-fns](https://date-fns.org/), which introduced the following breaking changes in react-datetime-input version 1.0.0:
 
-- The current `format` requires `dd` and `yyyy` to be lowercase (previously: uppercase).
+- `dateFormat` now requires `dd` and `yyyy` to be lowercase (previously: uppercase).
 - `isValid()` now receives an instance of `Date` (previously: instance of `Moment`)
 - The locale being passed is now a [date-fns locale](https://date-fns.org/v2.8.1/docs/I18n) (previously: using Moment locale).
 

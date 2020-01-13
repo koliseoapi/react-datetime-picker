@@ -1,9 +1,3 @@
-export function bindAll(_this, methods) {
-  methods.forEach(method => {
-    _this[method] = _this[method].bind(_this);
-  });
-}
-
 // transform a date format to a regex pattern
 export function dateFormatToPattern(dateFormat) {
   return dateFormat

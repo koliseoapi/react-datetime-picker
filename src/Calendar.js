@@ -1,5 +1,5 @@
 import React from "react";
-import { bindAll, chunk, isDateValid, capitalize } from "./util";
+import { chunk, isDateValid, capitalize } from "./util";
 import {
   subMonths,
   addMonths,
@@ -86,12 +86,25 @@ class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.stateFromProps(props);
-    bindAll(this, ["nextMonth", "prevMonth"]);
+
+    this.prevMonth = e => {
+      e && e.preventDefault();
+      this.setState({
+        moment: subMonths(this.state.moment, 1)
+      });
+    };
+
+    this.nextMonth = e => {
+      e && e.preventDefault();
+      this.setState({
+        moment: addMonths(this.state.moment, 1)
+      });
+    };
   }
 
-  stateFromProps({ dateValue, format }) {
+  stateFromProps({ dateValue, dateFormat }) {
     try {
-      var currentMoment = parse(dateValue, format, new Date());
+      var currentMoment = parse(dateValue, dateFormat, new Date());
 
       // if date is not valid
       if (!isDateValid(currentMoment)) {
@@ -106,24 +119,10 @@ class Calendar extends React.Component {
     };
   }
 
-  prevMonth(e) {
-    e && e.preventDefault();
-    this.setState({
-      moment: subMonths(this.state.moment, 1)
-    });
-  }
-
-  nextMonth(e) {
-    e && e.preventDefault();
-    this.setState({
-      moment: addMonths(this.state.moment, 1)
-    });
-  }
-
   render() {
     const moment = this.state.moment;
     //const currentDay = getDate(moment);
-    const { onChange, dateValue, format: dateFormat, locale } = this.props;
+    const { onChange, dateValue, dateFormat, locale } = this.props;
 
     const { lastMonth, currentMonth, nextMonth } = getCalendarFragments(moment);
     const days = [].concat(lastMonth, currentMonth, nextMonth);

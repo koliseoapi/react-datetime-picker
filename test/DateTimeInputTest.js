@@ -2,16 +2,25 @@ import React from "react";
 import renderer from "react-test-renderer";
 import DateTimeInput from "../src/DateTimeInput";
 import { parseISO, setDate } from "date-fns/esm";
+import { es } from "date-fns/esm/locale";
 
 describe("DateTimeInput", function() {
-  const date = parseISO("2014-10-25T10:20");
+  const dateStr = "2014-10-25T10:20";
+  const date = parseISO(dateStr);
 
   it("should render with empty date", function() {
     renderer.create(<DateTimeInput />);
   });
 
   it("should render with non-empty date", function() {
-    const tree = renderer.create(<DateTimeInput value={date} />);
+    const tree = renderer.create(<DateTimeInput value={dateStr} />);
+    expect(tree.toJSON()).toMatchSnapshot();
+  });
+
+  it("should render locale-specific date", function() {
+    const tree = renderer.create(
+      <DateTimeInput value={dateStr} dateFormat="dd-MM-yyyy" locale={es} />
+    );
     expect(tree.toJSON()).toMatchSnapshot();
   });
 
@@ -30,7 +39,7 @@ describe("DateTimeInput", function() {
   it("should respond to text introduced by the user", function() {
     const onChange = jest.fn();
     const tree = renderer.create(
-      <DateTimeInput name="foobar" value={date} onChange={onChange} />
+      <DateTimeInput name="foobar" value={dateStr} onChange={onChange} />
     );
 
     // edit date
@@ -70,7 +79,7 @@ describe("DateTimeInput", function() {
   });
 
   it("should render a calendar", function() {
-    const tree = renderer.create(<DateTimeInput value={date} />);
+    const tree = renderer.create(<DateTimeInput value={dateStr} />);
     const dateInput = getDateInput(tree);
     dateInput.props.onFocus();
     expect(tree.toJSON()).toMatchSnapshot();
@@ -88,7 +97,7 @@ describe("DateTimeInput", function() {
 
   it("should render disabled inputs", function() {
     const tree = renderer.create(
-      <DateTimeInput value={date} disabled={true} />
+      <DateTimeInput value={dateStr} disabled={true} />
     );
     expect(tree.toJSON()).toMatchSnapshot();
   });

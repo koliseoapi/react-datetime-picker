@@ -1,17 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import DateTimeInput from "../index";
-import { bindAll } from "../src/util";
-import { format, isAfter } from "date-fns/esm";
+import { isAfter, formatISO, parseISO } from "date-fns/esm";
 import { es } from "date-fns/esm/locale";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      from: new Date()
+      from: formatISO(new Date())
     };
-    bindAll(this, ["onChange"]);
+
+    this.onChange = ({ name, strValue }) => {
+      console.log(`New value for ${name}: ${strValue}`);
+      const state = {};
+      state[name] = strValue;
+      this.setState(state);
+    };
   }
 
   render() {
@@ -27,7 +32,7 @@ class App extends React.Component {
           <DateTimeInput
             name="from"
             id="from"
-            format="MM-dd-yyyy"
+            dateFormat="MM-dd-yyyy"
             value={from}
             onChange={this.onChange}
             required={true}
@@ -39,12 +44,12 @@ class App extends React.Component {
           <DateTimeInput
             name="until"
             id="until"
-            format="dd-MM-yyyy"
+            dateFormat="dd-MM-yyyy"
             value={until}
             i18n={{ Close: "Cerrar" }}
             onChange={this.onChange}
             isValid={date => {
-              return !from || isAfter(date, from);
+              return !from || isAfter(date, parseISO(from));
             }}
             showTime={false}
             locale={es}
@@ -52,17 +57,6 @@ class App extends React.Component {
         </form>
       </div>
     );
-  }
-
-  onChange({ name, value }) {
-    const formattedValue =
-      typeof value === "undefined"
-        ? "undefined"
-        : format(value, "yyyy-MM-dd HH:mm");
-    console.log(`New value for ${name}: ${formattedValue}`);
-    const state = {};
-    state[name] = value;
-    this.setState(state);
   }
 }
 
